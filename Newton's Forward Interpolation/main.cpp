@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-/* Factorial (safe for small n used in interpolation) */
+
 int fact(int n)
 {
     int f = 1;
@@ -10,7 +10,7 @@ int fact(int n)
     return f;
 }
 
-/* Detect polynomial order using forward differences */
+
 int detectOrder(const vector<vector<double>>& diff, double eps = 1e-9)
 {
     int n = diff.size();
@@ -27,7 +27,7 @@ int detectOrder(const vector<vector<double>>& diff, double eps = 1e-9)
             }
         }
         if (allZero)
-            return j - 1;   // polynomial degree
+            return j - 1;
     }
     return n - 1;
 }
@@ -64,7 +64,7 @@ int main()
         double h = x[1] - x[0];
         double u = (X - x[0]) / h;
 
-        /* Forward Difference Table */
+
         vector<vector<double>> diff(n, vector<double>(n, 0.0));
         for (int i = 0; i < n; i++)
             diff[i][0] = y[i];
@@ -81,11 +81,11 @@ outputFile << fixed << setprecision(2);
 
 for (int i = 0; i < n; i++)
 {
-    // First column: y values
+
     cout << setw(10) << diff[i][0];
     outputFile << setw(10) << diff[i][0];
 
-    // Forward differences
+
     for (int j = 1; j < n - i; j++)
     {
         cout << setw(10) << diff[i][j];
@@ -96,7 +96,7 @@ for (int i = 0; i < n; i++)
     outputFile << "\n";
 }
 
-        /* Newton Forward Interpolation */
+
         double fx = diff[0][0];
         double u_term = 1.0;
 
@@ -108,7 +108,7 @@ for (int i = 0; i < n; i++)
 
         int order = detectOrder(diff);
 
-        /* Forward Truncation Error */
+
         double error = 0.0;
         if (order + 1 < n)
         {
