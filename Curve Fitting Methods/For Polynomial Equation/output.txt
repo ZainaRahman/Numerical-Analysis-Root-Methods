@@ -1,0 +1,2 @@
+Quadratic Polynomial Fit:
+y = 3 + 2x + 1x^2

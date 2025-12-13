@@ -1,0 +1,2 @@
+Transcendental (Exponential) Fit:
+y = 68.8608 * e^(0.0194744x)
