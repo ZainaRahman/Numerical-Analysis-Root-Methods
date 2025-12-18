@@ -1,0 +1,3 @@
+Equation: 1*x^3 + 0*x^2 + -1*x^1 + -2*x^0
+Newton-Raphson Root = 1.52138
+Iterations = 2

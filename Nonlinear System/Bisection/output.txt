@@ -1,0 +1,3 @@
+Equation: 1*x^3 + 0*x^2 + -4*x^1 + -9*x^0
+Bisection Root = 2.70653
+Iterations = 16
