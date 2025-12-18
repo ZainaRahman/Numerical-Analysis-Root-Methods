@@ -3,7 +3,7 @@ using namespace std;
 
 int main() {
 
-    // File handling
+    // File Handling
     ifstream in("input.txt");
     ofstream out("output.txt");
 
@@ -17,52 +17,118 @@ int main() {
 
     vector<vector<float>> a(n, vector<float>(n + 1));
 
-    // Read augmented matrix
+    // augmented matrix
     for (int i = 0; i < n; i++) {
         for (int j = 0; j <= n; j++) {
             in >> a[i][j];
         }
     }
 
-    // -------- Forward Elimination --------
-    for (int i = 0; i < n - 1; i++) {
+    // Copying original matrix for echelon form
+    vector<vector<float>> echelon = a;
+
+    //Forward Elimination (Echelon Form)
+    for (int i = 0; i < n; i++) {
+
+        int maxRow = i;
         for (int k = i + 1; k < n; k++) {
+            if (fabs(echelon[k][i]) > fabs(echelon[maxRow][i]))
+                maxRow = k;
+        }
 
-            if (a[i][i] == 0) {
-                out << "Error: Zero pivot encountered.\n";
-                return 1;
-            }
+        swap(echelon[i], echelon[maxRow]);
 
-            float factor = a[k][i] / a[i][i];
+        if (fabs(echelon[i][i]) < 1e-9)
+            continue;
 
+        for (int k = i + 1; k < n; k++) {
+            float factor = echelon[k][i] / echelon[i][i];
             for (int j = i; j <= n; j++) {
-                a[k][j] -= factor * a[i][j];
+                echelon[k][j] -= factor * echelon[i][j];
             }
         }
     }
 
-    // -------- Back Substitution --------
-    vector<float> x(n);
+    // Printing Echelon Form 
+    out << "Echelon Form (Upper Triangular):\n";
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j <= n; j++)
+            out << fixed << setprecision(4) << echelon[i][j] << " ";
+        out << "\n";
+    }
+    out << "\n";
 
-    for (int i = n - 1; i >= 0; i--) {
-        x[i] = a[i][n];
+    
+    int rankA = 0, rankAug = 0;
+    const float EPS = 1e-9;
 
-        for (int j = i + 1; j < n; j++) {
-            x[i] -= a[i][j] * x[j];
+    for (int i = 0; i < n; i++) {
+        bool nonZeroCoeff = false;
+        bool nonZeroAug = false;
+
+        for (int j = 0; j < n; j++) {
+            if (fabs(echelon[i][j]) > EPS)
+                nonZeroCoeff = true;
         }
 
-        if (a[i][i] == 0) {
-            out << "Error: Division by zero (infinite or no solution).\n";
+        if (fabs(echelon[i][n]) > EPS)
+            nonZeroAug = true;
+
+        if (nonZeroCoeff)
+            rankA++;
+
+        if (nonZeroCoeff || nonZeroAug)
+            rankAug++;
+    }
+
+    out << "System Classification:\n";
+
+    if (rankA < rankAug) {
+        out << "→ No Solution (Inconsistent System)\n";
+        return 0;
+    }
+    else if (rankA < n) {
+        out << "→ Infinite Solutions (Dependent System)\n";
+        return 0;
+    }
+    else {
+        out << "→ Unique Solution Exists\n\n";
+    }
+
+   
+    for (int i = 0; i < n; i++) {
+
+        int maxRow = i;
+        for (int k = i + 1; k < n; k++) {
+            if (fabs(a[k][i]) > fabs(a[maxRow][i]))
+                maxRow = k;
+        }
+
+        swap(a[i], a[maxRow]);
+
+        float pivot = a[i][i];
+
+        if (fabs(pivot) < EPS) {
+            out << "Numerical instability detected.\n";
             return 1;
         }
 
-        x[i] /= a[i][i];
+        for (int j = 0; j <= n; j++)
+            a[i][j] /= pivot;
+
+        for (int k = 0; k < n; k++) {
+            if (k != i) {
+                float factor = a[k][i];
+                for (int j = 0; j <= n; j++)
+                    a[k][j] -= factor * a[i][j];
+            }
+        }
     }
 
-    // -------- Output --------
+    //  Output Solution 
     out << "Solution:\n";
     for (int i = 0; i < n; i++) {
-        out << "x" << i + 1 << " = " << x[i] << "\n";
+        out << "x" << i + 1 << " = " << a[i][n] << "\n";
     }
 
     return 0;

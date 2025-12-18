@@ -1,4 +1,12 @@
+Echelon Form (Upper Triangular):
+-3.0000 -1.0000 2.0000 -11.0000 
+0.0000 1.6667 0.6667 4.3333 
+0.0000 0.0000 0.2000 -0.2000 
+
+System Classification:
+→ Unique Solution Exists
+
 Solution:
-x1 = 2
-x2 = 3
-x3 = -1
+x1 = 2.0000
+x2 = 3.0000
+x3 = -1.0000
