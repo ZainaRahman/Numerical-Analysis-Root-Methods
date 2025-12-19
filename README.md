@@ -340,7 +340,7 @@ x2 = 3.0000
 x3 = -1.0000
 
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 
 ### Gauss Jordan Elimination Method
@@ -567,7 +567,7 @@ x4 = -0.1385
 x5 = 1.1846
 
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 
 ### LU Decomposition Method
@@ -805,7 +805,7 @@ x4 = -0.138462
 x5 = 1.18462
 
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 
 ### Matrix Inversion
@@ -1018,7 +1018,7 @@ x4 = -0.138462
 x5 = 1.18462
 
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 
 ## Solution of Non-Linear Equations
@@ -1104,7 +1104,7 @@ Equation: 1*x^3 + 0*x^2 + -4*x^1 + -9*x^0
 Bisection Root = 2.70653
 Iterations = 16
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 
 ### False Position Method
@@ -1196,7 +1196,7 @@ Equation: 1*x^3 + 0*x^2 + -4*x^1 + -9*x^0
 False Position Root = 2.70642
 iterations = 21
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 
 ### Secant Method
@@ -1273,7 +1273,7 @@ Equation: 1*x^3 + 0*x^2 + -1*x^1 + -2*x^0
 Secant Root = 1.52138
 Iterations = 5
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 
 ### Newton Raphson Method
@@ -1362,7 +1362,7 @@ Equation: 1*x^3 + 0*x^2 + -1*x^1 + -2*x^0
 Newton-Raphson Root = 1.52138
 Iterations = 2
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 ### Solution of Interpolation
 
@@ -1593,7 +1593,7 @@ Estimated Forward Interpolation Error = 0.00
 
 
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 
 ### Newton's Backward Interpolation Method
@@ -1789,7 +1789,7 @@ Estimated Backward Interpolation Error = 0.00
 
 
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 
 ### Divided Difference Method
@@ -1936,7 +1936,7 @@ Truncation Error = 0.23
 
 
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 ## Solution of Curve Fitting Model
 
@@ -2052,7 +2052,7 @@ Linear Fit Equation:
 y = 69.2 + 3x
 
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 
 ### Least Square Regression Method For Transcendental Equations 
@@ -2190,7 +2190,7 @@ Transcendental (Exponential) Fit:
 y = 68.8608 * e^(0.0194744x)
 
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 
 ### Least Square Regression Method For Polynomial Equations 
@@ -2362,7 +2362,7 @@ Quadratic Polynomial Fit:
 y = 3 + 2x + 1x^2
 
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 
 ### Solution of Differential Equations
@@ -2500,7 +2500,7 @@ Required value at x = 1
 Computed solution: y(1) = 3.43656
 
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 
 ### Numerical Differentiation By Forward Interpolation Method
@@ -2616,7 +2616,7 @@ For reference, the interpolation polynomials used in numerical differentiation a
 ```
 [Add your output format here]
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 
 ### Numerical Differentiation By Backward Interpolation Method
@@ -2638,7 +2638,7 @@ For reference, the interpolation polynomials used in numerical differentiation a
 ```
 [Add your output format here]
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 
 ## Solution of Numerical Integrations
@@ -2733,7 +2733,7 @@ int main() {
 Equation: 1*x^3 + 2*x^2 + 0*x^1 + 1*x^0
 Simpson 1/3 Rule Result = 1.91667
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 
 ### Simpson's Three-Eighths Rule 
@@ -2823,6 +2823,6 @@ int main() {
 Equation: 1*x^4 + 0*x^3 + 0*x^2 + 1*x^1 + 1*x^0
 Simpson 3/8 Rule Result = 56.1562
 ```
-
+#### [Back to Contents](#table-of-contents)
 ---
 
