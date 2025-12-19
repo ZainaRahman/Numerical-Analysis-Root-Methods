@@ -1374,7 +1374,6 @@ Iterations = 2
 ```
 
 ---
-
 ### Solution of Interpolation
 
 ### Newton's Forward Interpolation Method
@@ -1384,48 +1383,33 @@ Iterations = 2
 **Newton's Forward Difference Interpolation**
 
 #### Objective
-To approximate the value of a function
-$$ f(x) $$
-at a point 
-$$ x $$
-near the *beginning* of a table of equally spaced data points using forward differences.
+To approximate function values at intermediate points using forward differences.
+Supports multiple data points with automatic polynomial order detection.
+
+#### NEWTON FORWARD INTERPOLATION FORMULA:
+
+	f(x) = f(x₀) + uΔf(x₀) + [u(u-1)/2!]Δ²f(x₀) + [u(u-1)(u-2)/3!]Δ³f(x₀) + ...
+
+where:
+
+	u = (x - x₀) / h
+	h = step size (x₁ - x₀)
+	Δⁿf(x₀) = nth forward difference at x₀
+
+#### FORWARD DIFFERENCE TABLE:
+
+	Δf(xᵢ) = f(xᵢ₊₁) - f(xᵢ)
+	Δ²f(xᵢ) = Δf(xᵢ₊₁) - Δf(xᵢ)
+	Δⁿf(xᵢ) = Δⁿ⁻¹f(xᵢ₊₁) - Δⁿ⁻¹f(xᵢ)
 
 #### Data Requirement
- - Tabulated values 
- $$
- (x_i, y_i), i = 0,1,...,n
- $$
- - Equal spacing
-     $$
-     h = x_{i+1} - x_i
-     $$
-
-#### Notation
--  x_0: first tabulated point
-- h: step size
-- u: parameter defined by
-    $$
-    u = \frac{x - x_0}{h}
-    $$
-- Δy_i: forward differences defined by
-    $$
-    \Delta y_i = y_{i+1} - y_i, \quad \Delta^2 y_i = \Delta(\Delta y_i), \text{ etc.}
-    $$
-
-#### Interpolating Polynomial
-The Newton forward interpolating polynomial of degree \(n\) is
-$$
-f(x) \approx y_0 + u\,\Delta y_0 + \frac{u(u-1)}{2!}\,\Delta^2 y_0
-                    + \frac{u(u-1)(u-2)}{3!}\,\Delta^3 y_0 + \cdots
-$$
+- Tabulated values (x₀, y₀), (x₁, y₁), ..., (xₙ, yₙ)
+- Equal spacing between x values
 
 #### Features
-- Best suited when
-    $$
-    x \text{ lies near } x_0
-    $$
-- Uses entries from the top of the forward difference table.
-- Accuracy improves as more terms (and smoother functions) are used.
+- Best suited for interpolation near the beginning of the data table.
+- Requires equally spaced x values.
+- Accuracy improves with more data points and smoother functions.
 
 ### Newton's Forward Interpolation Code
 ```cpp
@@ -1629,51 +1613,32 @@ Estimated Forward Interpolation Error = 0.00
 **Newton's Backward Difference Interpolation**
 
 #### Objective
-To approximate
-$$
-f(x)
-$$
-at a point
-$$
-x
-$$
-near the *end* of a table of equally spaced data points using backward differences.
+To approximate function values at intermediate points using backward differences.
+Ideal when interpolating near the end of the data table.
+
+#### NEWTON BACKWARD INTERPOLATION FORMULA:
+
+	f(x) = f(xₙ) + u∇f(xₙ) + [u(u+1)/2!]∇²f(xₙ) + [u(u+1)(u+2)/3!]∇³f(xₙ) + ...
+
+where:
+
+	u = (x - xₙ) / h
+	h = step size (x₁ - x₀)
+	∇ⁿf(xₙ) = nth backward difference at xₙ
+
+#### BACKWARD DIFFERENCE TABLE:
+
+	∇f(xᵢ) = f(xᵢ) - f(xᵢ₋₁)
+	∇²f(xᵢ) = ∇f(xᵢ) - ∇f(xᵢ₋₁)
+	∇ⁿf(xᵢ) = ∇ⁿ⁻¹f(xᵢ) - ∇ⁿ⁻¹f(xᵢ₋₁)
 
 #### Data Requirement
-- Tabulated values:
-    $$
-    (x_i, y_i), \quad i = 0,1,\ldots,n
-    $$
-- Equal spacing
-    $$
-    h = x_{i+1} - x_i
-    $$
-
-#### Notation
-- x_n: last tabulated point
-- h: step size
-- u: parameter defined by
-    $$
-    u = \frac{x - x_n}{h}
-    $$
-- ∇y_i: backward differences defined by
-    $$
-    \nabla y_i = y_i - y_{i-1}, \quad \nabla^2 y_i = \nabla(\nabla y_i), \text{ etc.}
-    $$
-
-#### Interpolating Polynomial
-The Newton backward interpolating polynomial of degree \(n\) is
-$$
-f(x) \approx y_n + u\,\nabla y_n + \frac{u(u+1)}{2!}\,\nabla^2 y_n
-                    + \frac{u(u+1)(u+2)}{3!}\,\nabla^3 y_n + \cdots
-$$
+- Tabulated values (x₀, y₀), (x₁, y₁), ..., (xₙ, yₙ)
+- Equal spacing between x values
 
 #### Features
-- Best suited when
-    $$
-    x \text{ lies near } x_n
-    $$
-- Uses entries from the bottom of the backward difference table.
+- Best suited for interpolation near the end of the data table.
+- Requires equally spaced x values.
 - Particularly useful when new data points are appended at the end.
 
 ### Newton's Backward Interpolation Code
@@ -1844,40 +1809,29 @@ Estimated Backward Interpolation Error = 0.00
 **Newton's Divided Difference Interpolation**
 
 #### Objective
-To construct an interpolating polynomial for data points that may be **unequally spaced** in
-$$
-x
-$$
+To construct interpolating polynomials for unequally spaced data points.
+Works with both equal and unequal spacing.
+
+#### DIVIDED DIFFERENCES FORMULA:
+
+First-order divided difference:
+
+	f[xᵢ, xᵢ₊₁] = [f(xᵢ₊₁) - f(xᵢ)] / (xᵢ₊₁ - xᵢ)
+
+Higher-order divided differences (recursive):
+
+	f[xᵢ, xᵢ₊₁, ..., xᵢ₊ₖ] = [f[xᵢ₊₁, ..., xᵢ₊ₖ] - f[xᵢ, ..., xᵢ₊ₖ₋₁]] / (xᵢ₊ₖ - xᵢ)
+
+#### NEWTON DIVIDED DIFFERENCE POLYNOMIAL:
+
+	Pₙ(x) = f[x₀] + (x - x₀)f[x₀,x₁]
+	        + (x - x₀)(x - x₁)f[x₀,x₁,x₂]
+	        + ...
+	        + (x - x₀)...(x - xₙ₋₁)f[x₀,...,xₙ]
 
 #### Data Requirement
-- Distinct data points:
-    $$
-    (x_0, y_0), (x_1, y_1), \ldots, (x_n, y_n)
-    $$
-- No requirement of equal spacing in
-    $$
-    x_i
-    $$
-
-#### Divided Differences
-The first-order divided difference is
-$$
-f[x_i, x_{i+1}] = \frac{f(x_{i+1}) - f(x_i)}{x_{i+1} - x_i}.
-$$
-Higher-order divided differences are defined recursively as
-$$
-f[x_i, x_{i+1}, \dots, x_{i+k}] =
-\frac{f[x_{i+1}, \dots, x_{i+k}] - f[x_i, \dots, x_{i+k-1}]}{x_{i+k} - x_i}.
-$$
-
-#### Newton Divided Difference Polynomial
-The interpolating polynomial can be written as
-$$
-P_n(x) = f[x_0] + (x - x_0) f[x_0,x_1]
-    + (x - x_0)(x - x_1) f[x_0,x_1,x_2]
-    + \cdots
-    + (x - x_0)\cdots(x - x_{n-1}) f[x_0,\dots,x_n].
-$$
+- Distinct data points (x₀, y₀), (x₁, y₁), ..., (xₙ, yₙ)
+- Works with equal or unequal spacing
 
 #### Features
 - Works for both equally and unequally spaced nodes.
@@ -1994,7 +1948,6 @@ Truncation Error = 0.23
 ```
 
 ---
-
 ## Solution of Curve Fitting Model
 
 ### Least Square Regression Method For Linear Equations Method
