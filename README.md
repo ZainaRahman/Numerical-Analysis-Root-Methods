@@ -1000,18 +1000,67 @@ x5 = 1.18462
 [Add your theory content here]
 
 #### Least Square Regression Method For Linear Equations Code
-```python
-# Add your code here
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+
+    // File Handling 
+    ifstream in("input.txt");
+    ofstream out("output.txt");
+
+    if (!in) {
+        cerr << "Error: input.txt not found\n";
+        return 1;
+    }
+
+    int n;
+    in >> n;
+
+    vector<double> x(n), y(n);
+
+    for (int i = 0; i < n; i++) {
+        in >> x[i] >> y[i];
+    }
+
+    double sumx = 0, sumy = 0, sumxy = 0, sumx2 = 0;
+
+    for (int i = 0; i < n; i++) {
+        sumx  += x[i];
+        sumy  += y[i];
+        sumxy += x[i] * y[i];
+        sumx2 += x[i] * x[i];
+    }
+
+    // Least squares coefficients
+    double b = (n * sumxy - sumx * sumy) / (n * sumx2 - sumx * sumx);
+    double a = (sumy - b * sumx) / n;
+
+    // Output 
+    out << "Linear Fit Equation:\n";
+    out << "y = " << a << " + " << b << "x\n";
+
+    return 0;
+}
+
 ```
 
 #### Least Square Regression Method For Linear Equations Input
 ```
-[Add your input format here]
+5
+1 50
+2 80
+3 96
+4 120
+5 45
 ```
 
 #### Least Square Regression Method For Linear Equations Output
 ```
-[Add your output format here]
+Linear Fit Equation:
+y = 69.2 + 3x
+
 ```
 
 ---
@@ -1022,18 +1071,73 @@ x5 = 1.18462
 [Add your theory content here]
 
 #### Least Square Regression Method For Transcendental Equations Code
-```python
-# Add your code here
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+
+    // File Handling
+    ifstream in("input.txt");
+    ofstream out("output.txt");
+
+    if (!in) {
+        cerr << "Error: input.txt not found\n";
+        return 1;
+    }
+
+    int n;
+    in >> n;
+
+    vector<double> x(n), y(n);
+    for (int i = 0; i < n; i++) {
+        in >> x[i] >> y[i];
+    }
+
+    // Take log of y
+    vector<double> Y(n);
+    for (int i = 0; i < n; i++) {
+        Y[i] = log(y[i]);   // ln(y)
+    }
+
+    double sumx = 0, sumY = 0, sumxY = 0, sumx2 = 0;
+
+    for (int i = 0; i < n; i++) {
+        sumx  += x[i];
+        sumY  += Y[i];
+        sumxY += x[i] * Y[i];
+        sumx2 += x[i] * x[i];
+    }
+
+    // Least squares for Y = A + b x
+    double b = (n * sumxY - sumx * sumY) / (n * sumx2 - sumx * sumx);
+    double A = (sumY - b * sumx) / n;
+    double a = exp(A);
+
+    // Output
+    out << "Transcendental (Exponential) Fit:\n";
+    out << "y = " << a << " * e^(" << b << "x)\n";
+
+    return 0;
+}
+
 ```
 
 #### Least Square Regression Method For Transcendental Equations Input
 ```
-[Add your input format here]
+5
+1 50
+2 80
+3 96
+4 120
+5 45
 ```
 
 #### Least Square Regression Method For Transcendental Equations Output
 ```
-[Add your output format here]
+Transcendental (Exponential) Fit:
+y = 68.8608 * e^(0.0194744x)
+
 ```
 
 ---
@@ -1044,18 +1148,129 @@ x5 = 1.18462
 [Add your theory content here]
 
 #### Least Square Regression Method For Polynomial Equations Code
-```python
-# Add your code here
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+// Solve nXn linear system using Gauss–Jordan elimination
+vector<double> solveN(vector<vector<double>> A, vector<double> B) {
+
+    int n = A.size();
+
+    for (int i = 0; i < n; i++) {
+
+        // Pivot selection
+        int pivot = i;
+        for (int j = i + 1; j < n; j++) {
+            if (fabs(A[j][i]) > fabs(A[pivot][i])) {
+                pivot = j;
+            }
+        }
+
+        swap(A[i], A[pivot]);
+        swap(B[i], B[pivot]);
+
+        double div = A[i][i];
+        if (fabs(div) < 1e-12) {
+            cout << "Singular system detected. No unique solution." << endl;
+            return {};  
+        }
+
+        // Normalize pivot row
+        for (int j = 0; j < n; j++)
+            A[i][j] /= div;
+        B[i] /= div;
+
+        // Eliminate other rows
+        for (int j = 0; j < n; j++) {
+            if (j != i) {
+                double factor = A[j][i];
+                for (int k = 0; k < n; k++)
+                    A[j][k] -= factor * A[i][k];
+                B[j] -= factor * B[i];
+            }
+        }
+    }
+
+    return B;
+}
+
+
+int main() {
+
+    // File Handling
+    ifstream in("input.txt");
+    ofstream out("output.txt");
+
+    if (!in) {
+        cerr << "Error: input.txt not found\n";
+        return 1;
+    }
+
+    int n;
+    in >> n;
+
+    vector<double> x(n), y(n);
+    for (int i = 0; i < n; i++)
+        in >> x[i] >> y[i];
+
+    // Required summations
+    double sx = 0, sx2 = 0, sx3 = 0, sx4 = 0;
+    double sy = 0, sxy = 0, sx2y = 0;
+
+    for (int i = 0; i < n; i++) {
+        sx   += x[i];
+        sx2  += x[i] * x[i];
+        sx3  += x[i] * x[i] * x[i];
+        sx4  += x[i] * x[i] * x[i] * x[i];
+        sy   += y[i];
+        sxy  += x[i] * y[i];
+        sx2y += x[i] * x[i] * y[i];
+    }
+
+    // Normal equations
+    vector<vector<double>> A = {
+        { double(n), sx,  sx2 },
+        { sx,  sx2, sx3 },
+        { sx2, sx3, sx4 }
+    };
+
+    vector<double> B = { sy, sxy, sx2y };
+
+    vector<double> sol = solveN(A, B);
+
+    if (sol.empty()) {
+    cout << "Solution could not be computed.\n";
+    return 0;
+    }
+
+    // ---- Output ----
+    out << "Quadratic Polynomial Fit:\n";
+    out << "y = " << sol[0]
+        << " + " << sol[1] << "x"
+        << " + " << sol[2] << "x^2\n";
+
+    return 0;
+}
+
+
 ```
 
 #### Least Square Regression Method For Polynomial Equations Input
 ```
-[Add your input format here]
+5
+1 6 
+2 11
+3 18
+4 27
+5 38
 ```
 
 #### Least Square Regression Method For Polynomial Equations Output
 ```
-[Add your output format here]
+Quadratic Polynomial Fit:
+y = 3 + 2x + 1x^2
+
 ```
 
 ---
