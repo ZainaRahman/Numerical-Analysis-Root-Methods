@@ -117,19 +117,19 @@
 
 ---
 
-### Solution of Linear Equations
+## Solution of Linear Equations
 
 ### Gauss Elimination Method
 
-#### Gauss Elimination Theory
+### Gauss Elimination Theory
 
-### Method used
+#### Method used
 **Gauss Elimination Method**
 
-### Objective
+#### Objective
 To solve a system of linear algebraic equations by transforming it into an **upper triangular system**, followed by **back substitution**.
 
-### Data Requirement
+#### Data Requirement
 A system of `n` linear equations:
 ```
 a11x1 + a12x2 + ... + a1nxn = b1
@@ -143,45 +143,45 @@ Matrix form:
 AX = B
 ```
 
-### Notation
+#### Notation
 - `A = [aij]` : coefficient matrix of order `n × n`
 - `X = [x1, x2, ..., xn]ᵀ` : vector of unknowns
 - `B = [b1, b2, ..., bn]ᵀ` : constant vector
 
-### Core Idea
+#### Core Idea
 The system is simplified by eliminating variables using **elementary row operations** to obtain an upper triangular matrix.
 
-### Elimination Approach (Formula)
+#### Elimination Approach (Formula)
 To eliminate element `aij` (where `j < i`):
 ```
 Ri ← Ri − (aij / ajj) Rj
 ```
 
 
-### Phases Involved
+#### Phases Involved
 
-#### Forward Elimination
+##### Forward Elimination
 Transforms the augmented matrix `[A | B]` into an **upper triangular form**.
 
-#### Back Substitution
+##### Back Substitution
 Solutions are obtained using:
 ```
 xn = bn / ann
 xi = (1 / aii) [ bi − Σ (aij xj) ], j = i+1 to n
 ```
 
-### Accuracy Considerations
+#### Accuracy Considerations
 - Exact in theory
 - Rounding errors may occur in floating-point arithmetic
 - Pivoting improves numerical stability
 
-### Applicability
+#### Applicability
 - Suitable for small to medium-sized systems
 - Widely used due to conceptual simplicity
 
 
 
-#### Gauss Elimination Code
+### Gauss Elimination Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -321,7 +321,7 @@ int main() {
 
 ```
 
-#### Gauss Elimination Input
+### Gauss Elimination Input
 ```
 3
 2 1 -1 8
@@ -329,7 +329,7 @@ int main() {
 -2 1 2 -3
 ```
 
-#### Gauss Elimination Output
+### Gauss Elimination Output
 ```
 Echelon Form (Upper Triangular):
 -3.0000 -1.0000 2.0000 -11.0000 
@@ -350,27 +350,27 @@ x3 = -1.0000
 
 ### Gauss Jordan Elimination Method
 
-#### Gauss Jordan Theory
-### Method used
+### Gauss Jordan Theory
+#### Method used
 **Gauss–Jordan Elimination Method**
 
-### Objective
+#### Objective
 To solve a system of linear equations by reducing the augmented matrix directly to **Reduced Row Echelon Form (RREF)**.
 
-### Data Requirement
+#### Data Requirement
 Augmented matrix form:
 ```
 [A | B]
 ```
 
-### Notation
+#### Notation
 - `aij` : element of coefficient matrix
 - `bi`  : element of constant vector
 
-### Core Idea
+#### Core Idea
 Each pivot element is made **unity**, and all other elements in its column are eliminated, producing an identity matrix.
 
-### Elimination Approach (Formulae)
+#### Elimination Approach (Formulae)
 
 **Normalization of pivot row:**
 ```
@@ -381,27 +381,27 @@ Ri ← Ri / aii
 ```
 Rj ← Rj − aji Ri (j ≠ i)
 ```
-### Matrix Form Obtained
+#### Matrix Form Obtained
 ```
 [I | X]
 ```
 
 where `I` is the identity matrix and `X` contains the solution.
 
-### Evaluation Process
+#### Evaluation Process
 The solution is obtained directly as:
 ```
 xi = bi
 ```
-### Accuracy Considerations
+#### Accuracy Considerations
 - More computationally expensive than Gauss Elimination
 - Sensitive to rounding errors for large systems
 
-### Applicability
+#### Applicability
 - Used when a direct solution or matrix inverse is required
 
 
-#### Gauss Jordan Code
+### Gauss Jordan Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -542,7 +542,7 @@ int main() {
 
 ```
 
-#### Gauss Jordan Input
+### Gauss Jordan Input
 ```
 5
 2 1 -1 3 2 9
@@ -552,7 +552,7 @@ int main() {
 1 -1 2 3 4 15
 ```
 
-#### Gauss Jordan Output
+### Gauss Jordan Output
 ```
 Echelon Form (Upper Triangular):
 3.0000 2.0000 4.0000 1.0000 -2.0000 20.0000 
@@ -577,29 +577,29 @@ x5 = 1.1846
 
 ### LU Decomposition Method
 
-#### LU Decomposition Theory
-### Method used
+### LU Decomposition Theory
+#### Method used
 **LU Decomposition Method**
 
-### Objective
+#### Objective
 To solve a system of linear equations by factorizing the coefficient matrix into lower and upper triangular matrices.
 
-### Data Requirement
+#### Data Requirement
 A square matrix with non-zero pivots.
 
-### Core Idea (Formula)
+#### Core Idea (Formula)
 ```
 A = LU
 ```
 
-### Notation
+#### Notation
 - `L = [lij]` : lower triangular matrix
 - `U = [uij]` : upper triangular matrix
 - `A` : coefficient matrix
 - `X` : solution vector
 - `B` : constant vector
 
-### Solution Process
+#### Solution Process
 
 **Step 1:** Solve
 ```
@@ -619,15 +619,15 @@ using back substitution:
 xi = (1 / uii) [ yi − Σ (uij xj) ], j = i+1 to n
 ```
 
-### Accuracy Considerations
+#### Accuracy Considerations
 - More efficient than repeated Gauss Elimination
 - Numerical stability improves with pivoting
 
-### Applicability
+#### Applicability
 - Ideal for solving multiple systems with the same coefficient matrix
 
 
-#### LU Decomposition Code
+### LU Decomposition Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -774,7 +774,7 @@ int main() {
 
 ```
 
-#### LU Decomposition Input
+### LU Decomposition Input
 ```
 5
 2 1 -1 3 2 9
@@ -784,7 +784,7 @@ int main() {
 1 -1 2 3 4 15
 ```
 
-#### LU Decomposition Output
+### LU Decomposition Output
 ```
 U Matrix:
 2 1 -1 3 2 
@@ -815,19 +815,18 @@ x5 = 1.18462
 
 ### Matrix Inversion
 
-#### Matrix Inversion Theory
-## 4. Matrix Inversion
+### Matrix Inversion Theory
 
-### Method used
+#### Method used
 **Matrix Inversion Method**
 
-### Objective
+#### Objective
 To solve a system of linear equations using the inverse of the coefficient matrix.
 
-### Data Requirement
+#### Data Requirement
 A square, non-singular matrix (`det(A) ≠ 0`).
 
-### Core Idea (Formula)
+#### Core Idea (Formula)
 Given:
 ```
 AX = B
@@ -836,30 +835,30 @@ The solution is:
 ```
 X = A⁻¹ B
 ```
-### Notation
+#### Notation
 - `A⁻¹` : inverse of matrix `A`
 - `I` : identity matrix
 
-### Inversion Approach
+#### Inversion Approach
 The inverse is computed using Gauss–Jordan elimination:
 ```
 [A | I] → [I | A⁻¹]
 ```
 
-### Evaluation Process
+#### Evaluation Process
 Once `A⁻¹` is obtained, the solution vector is computed using matrix multiplication.
 
-### Accuracy Considerations
+#### Accuracy Considerations
 - Computationally expensive
 - Sensitive to rounding errors
 - Not recommended for large systems
 
-### Applicability
+#### Applicability
 - Useful for theoretical analysis
 - Suitable for small systems only
 
 
-#### Matrix Inversion Code
+### Matrix Inversion Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -995,7 +994,7 @@ int main()
 
 ```
 
-#### Matrix Inversion Input
+### Matrix Inversion Input
 ```
 5
 2 1 -1 3 2 9
@@ -1005,7 +1004,7 @@ int main()
 1 -1 2 3 4 15
 ```
 
-#### Matrix Inversion Output
+### Matrix Inversion Output
 ```
 Determinant = 65
 
@@ -1027,24 +1026,24 @@ x5 = 1.18462
 
 ---
 
-### Solution of Non-Linear Equations
+## Solution of Non-Linear Equations
 
 ### Bisection Method
 
-#### Bisection Theory
+### Bisection Theory
 [Add your theory content here]
 
-#### Bisection Code
-```python
+### Bisection Code
+```cpp
 # Add your code here
 ```
 
-#### Bisection Input
+### Bisection Input
 ```
 [Add your input format here]
 ```
 
-#### Bisection Output
+### Bisection Output
 ```
 [Add your output format here]
 ```
@@ -1053,20 +1052,20 @@ x5 = 1.18462
 
 ### False Position Method
 
-#### False Position Theory
+### False Position Theory
 [Add your theory content here]
 
-#### False Position Code
-```python
+### False Position Code
+```cpp
 # Add your code here
 ```
 
-#### False Position Input
+### False Position Input
 ```
 [Add your input format here]
 ```
 
-#### False Position Output
+### False Position Output
 ```
 [Add your output format here]
 ```
@@ -1079,7 +1078,7 @@ x5 = 1.18462
 [Add your theory content here]
 
 #### Secant Code
-```python
+```cpp
 # Add your code here
 ```
 
@@ -1101,7 +1100,7 @@ x5 = 1.18462
 [Add your theory content here]
 
 #### Newton Raphson Code
-```python
+```cpp
 # Add your code here
 ```
 
@@ -1121,20 +1120,20 @@ x5 = 1.18462
 
 ### Newton's Forward Interpolation Method
 
-#### Newton's Forward Interpolation Theory
+### Newton's Forward Interpolation Theory
 [Add your theory content here]
 
-#### Newton's Forward Interpolation Code
-```python
+### Newton's Forward Interpolation Code
+```cpp
 # Add your code here
 ```
 
-#### Newton's Forward Interpolation Input
+### Newton's Forward Interpolation Input
 ```
 [Add your input format here]
 ```
 
-#### Newton's Forward Interpolation Output
+### Newton's Forward Interpolation Output
 ```
 [Add your output format here]
 ```
@@ -1143,20 +1142,20 @@ x5 = 1.18462
 
 ### Newton's Backward Interpolation Method
 
-#### Newton's Backward Interpolation Theory
+### Newton's Backward Interpolation Theory
 [Add your theory content here]
 
-#### Newton's Backward Interpolation Code
-```python
+### Newton's Backward Interpolation Code
+```cpp
 # Add your code here
 ```
 
-#### Newton's Backward Interpolation Input
+### Newton's Backward Interpolation Input
 ```
 [Add your input format here]
 ```
 
-#### Newton's Backward Interpolation Output
+### Newton's Backward Interpolation Output
 ```
 [Add your output format here]
 ```
@@ -1165,34 +1164,78 @@ x5 = 1.18462
 
 ### Divided Difference Method
 
-#### Divided Difference Theory
+### Divided Difference Theory
 [Add your theory content here]
 
-#### Divided Difference Code
-```python
+### Divided Difference Code
+```cpp
 # Add your code here
 ```
 
-#### Divided Difference Input
+### Divided Difference Input
 ```
 [Add your input format here]
 ```
 
-#### Divided Difference Output
+### Divided Difference Output
 ```
 [Add your output format here]
 ```
 
 ---
 
-### Solution of Curve Fitting Model
+## Solution of Curve Fitting Model
 
 ### Least Square Regression Method For Linear Equations Method
 
-#### Least Square Regression Method For Linear Equations Theory
-[Add your theory content here]
+### Least Square Regression Method For Linear Equations Theory
+#### Method used
+**Least Squares Regression – Linear Equation**
 
-#### Least Square Regression Method For Linear Equations Code
+#### Objective
+To fit a straight line of the form 
+```
+y = a + bx
+```
+that best represents the given experimental data.
+
+#### Data Requirement
+A set of `n` observed data points:
+```
+(x1, y1), (x2, y2), ..., (xn, yn)
+```
+
+#### Core Idea
+The best-fitting straight line is obtained by minimizing the **sum of squares of vertical deviations** (errors) between the observed data points and the assumed line.
+
+#### Assumed Model
+```
+y = a + bx
+```
+
+#### Least Squares Conditions
+To minimize error:
+```
+∑(y − a − bx)² → minimum
+```
+This leads to the **normal equations**:
+```
+∑y = na + b∑x
+∑xy = a∑x + b∑x²
+```
+#### Evaluation Process
+The two normal equations are solved simultaneously to determine constants `a` and `b`.
+
+#### Accuracy Considerations
+- Simple and effective for linear trends  
+- Not suitable for nonlinear data  
+- Accuracy depends on data distribution
+
+#### Applicability
+- Widely used for trend analysis
+- Useful when data follows an approximately linear pattern
+
+### Least Square Regression Method For Linear Equations Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -1239,7 +1282,7 @@ int main() {
 
 ```
 
-#### Least Square Regression Method For Linear Equations Input
+### Least Square Regression Method For Linear Equations Input
 ```
 5
 1 50
@@ -1249,7 +1292,7 @@ int main() {
 5 45
 ```
 
-#### Least Square Regression Method For Linear Equations Output
+### Least Square Regression Method For Linear Equations Output
 ```
 Linear Fit Equation:
 y = 69.2 + 3x
@@ -1260,10 +1303,71 @@ y = 69.2 + 3x
 
 ### Least Square Regression Method For Transcendental Equations 
 
-#### Least Square Regression Method For Transcendental Equations Theory
-[Add your theory content here]
+### Least Square Regression Method For Transcendental Equations Theory
+#### Method used
+**Least Squares Regression – Transcendental Equation**
 
-#### Least Square Regression Method For Transcendental Equations Code
+#### Objective
+To fit nonlinear relationships by transforming them into linear form so that least squares method can be applied.
+
+#### Common Transcendental Forms
+1. **Exponential model**
+```
+y = ae^(bx)
+```
+
+2. **Power model**
+```
+y = ax^b
+```
+
+#### Linearization Technique
+
+##### Exponential Equation
+Taking natural logarithm:
+```
+ln y = ln a + bx
+```
+Let:
+```
+Y = ln y , A = ln a
+```
+Then:
+```
+Y = A + bx
+```
+
+##### Power Equation
+Taking logarithm on both sides:
+```
+log y = log a + b log x
+```
+
+Let:
+```
+Y = log y , X = log x , A = log a
+```
+Then:
+```
+Y = A + bX
+```
+#### Evaluation Process
+- Transform the given data
+- Apply linear least squares regression
+- Compute constants
+- Convert back to original form
+
+#### Accuracy Considerations
+- Transformation may amplify errors
+- Requires positive data values
+- Fit quality depends on correct model assumption
+
+#### Applicability
+- Used in population growth, decay processes, and empirical laws
+- Suitable for nonlinear experimental data
+
+
+### Least Square Regression Method For Transcendental Equations Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -1316,7 +1420,7 @@ int main() {
 
 ```
 
-#### Least Square Regression Method For Transcendental Equations Input
+### Least Square Regression Method For Transcendental Equations Input
 ```
 5
 1 50
@@ -1326,7 +1430,7 @@ int main() {
 5 45
 ```
 
-#### Least Square Regression Method For Transcendental Equations Output
+### Least Square Regression Method For Transcendental Equations Output
 ```
 Transcendental (Exponential) Fit:
 y = 68.8608 * e^(0.0194744x)
@@ -1337,10 +1441,49 @@ y = 68.8608 * e^(0.0194744x)
 
 ### Least Square Regression Method For Polynomial Equations 
 
-#### Least Square Regression Method For Polynomial Equations Theory
-[Add your theory content here]
+### Least Square Regression Method For Polynomial Equations Theory
+#### Method used
+**Least Squares Regression – Polynomial Equation**
 
-#### Least Square Regression Method For Polynomial Equations Code
+#### Objective
+To fit a polynomial curve when linear regression is insufficient to represent data trends.
+
+#### Assumed Model (Second Order Polynomial)
+```
+y = a + bx + cx²
+```
+
+#### Data Requirement
+A set of experimental observations:
+```
+(x1, y1), (x2, y2), ..., (xn, yn)
+```
+
+#### Core Idea
+The coefficients of the polynomial are determined by minimizing the sum of squared deviations between observed and computed values.
+
+#### Normal Equations
+For a second-degree polynomial:
+```
+∑y = na + b∑x + c∑x²
+∑xy = a∑x + b∑x² + c∑x³
+∑x²y = a∑x² + b∑x³ + c∑x⁴
+```
+#### Evaluation Process
+- Compute required summations from data table
+- Solve the system of equations
+- Substitute coefficients into polynomial
+
+#### Accuracy Considerations
+- Higher degree improves fit but may cause overfitting
+- Computational complexity increases with degree
+- Sensitive to data errors
+
+#### Applicability
+- Used when data shows curvature
+- Suitable for engineering and experimental modeling
+
+### Least Square Regression Method For Polynomial Equations Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -1449,7 +1592,7 @@ int main() {
 
 ```
 
-#### Least Square Regression Method For Polynomial Equations Input
+### Least Square Regression Method For Polynomial Equations Input
 ```
 5
 1 6 
@@ -1459,7 +1602,7 @@ int main() {
 5 38
 ```
 
-#### Least Square Regression Method For Polynomial Equations Output
+### Least Square Regression Method For Polynomial Equations Output
 ```
 Quadratic Polynomial Fit:
 y = 3 + 2x + 1x^2
@@ -1472,20 +1615,20 @@ y = 3 + 2x + 1x^2
 
 ### Equal Interval Interpolation Method
 
-#### Equal Interval Interpolation Theory
+### Equal Interval Interpolation Theory
 [Add your theory content here]
 
-#### Equal Interval Interpolation Code
-```python
+### Equal Interval Interpolation Code
+```cpp
 # Add your code here
 ```
 
-#### Equal Interval Interpolation Input
+### Equal Interval Interpolation Input
 ```
 [Add your input format here]
 ```
 
-#### Equal Interval Interpolation Output
+### Equal Interval Interpolation Output
 ```
 [Add your output format here]
 ```
@@ -1494,20 +1637,20 @@ y = 3 + 2x + 1x^2
 
 ### Second Order Derivative Method 
 
-#### Second Order Derivative Theory
+### Second Order Derivative Theory
 [Add your theory content here]
 
-#### Second Order Derivative Code
-```python
+### Second Order Derivative Code
+```cpp
 # Add your code here
 ```
 
-#### Second Order Derivative Input
+### Second Order Derivative Input
 ```
 [Add your input format here]
 ```
 
-#### Second Order Derivative Output
+### Second Order Derivative Output
 ```
 [Add your output format here]
 ```
@@ -1516,20 +1659,20 @@ y = 3 + 2x + 1x^2
 
 ### Runge Kutta Method 
 
-#### Runge Kutta Theory
+### Runge Kutta Theory
 [Add your theory content here]
 
-#### Runge Kutta Code
-```python
+### Runge Kutta Code
+```cpp
 # Add your code here
 ```
 
-#### Runge Kutta Input
+### Runge Kutta Input
 ```
 [Add your input format here]
 ```
 
-#### Runge Kutta Output
+### Runge Kutta Output
 ```
 [Add your output format here]
 ```
@@ -1538,44 +1681,44 @@ y = 3 + 2x + 1x^2
 
 ### Numerical Differentiation Method
 
-#### Numerical Differentiation Theory
+### Numerical Differentiation Theory
 [Add your theory content here]
 
-#### Numerical Differentiation Code
-```python
+### Numerical Differentiation Code
+```cpp
 # Add your code here
 ```
 
-#### Numerical Differentiation Input
+### Numerical Differentiation Input
 ```
 [Add your input format here]
 ```
 
-#### Numerical Differentiation Output
+### Numerical Differentiation Output
 ```
 [Add your output format here]
 ```
 
 ---
 
-### Solution of Numerical Integrations
+## Solution of Numerical Integrations
 
 ### Simpson's One-Third Rule
 
-#### Simpson's One-Third Rule Theory
+### Simpson's One-Third Rule Theory
 [Add your theory content here]
 
-#### Simpson's One-Third Rule Code
-```python
+### Simpson's One-Third Rule Code
+```cpp
 # Add your code here
 ```
 
-#### Simpson's One-Third Rule Input
+### Simpson's One-Third Rule Input
 ```
 [Add your input format here]
 ```
 
-#### Simpson's One-Third Rule Output
+### Simpson's One-Third Rule Output
 ```
 [Add your output format here]
 ```
@@ -1584,20 +1727,20 @@ y = 3 + 2x + 1x^2
 
 ### Simpson's Three-Eighths Rule 
 
-#### Simpson's Three-Eighths Rule Theory
+### Simpson's Three-Eighths Rule Theory
 [Add your theory content here]
 
-#### Simpson's Three-Eighths Rule Code
-```python
+### Simpson's Three-Eighths Rule Code
+```cpp
 # Add your code here
 ```
 
-#### Simpson's Three-Eighths Rule Input
+### Simpson's Three-Eighths Rule Input
 ```
 [Add your input format here]
 ```
 
-#### Simpson's Three-Eighths Rule Output
+### Simpson's Three-Eighths Rule Output
 ```
 [Add your output format here]
 ```
