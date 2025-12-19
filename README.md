@@ -1121,21 +1121,244 @@ x5 = 1.18462
 ### Newton's Forward Interpolation Method
 
 ### Newton's Forward Interpolation Theory
-[Add your theory content here]
+#### Method used
+**Newton's Forward Difference Interpolation**
+
+#### Objective
+To approximate the value of a function
+$$ f(x) $$
+at a point 
+$$ x $$
+near the *beginning* of a table of equally spaced data points using forward differences.
+
+#### Data Requirement
+ - Tabulated values 
+ $$
+ (x_i, y_i), i = 0,1,...,n
+ $$
+ - Equal spacing
+     $$
+     h = x_{i+1} - x_i
+     $$
+
+#### Notation
+-  x_0: first tabulated point
+- h: step size
+- u: parameter defined by
+    $$
+    u = \frac{x - x_0}{h}
+    $$
+- Δy_i: forward differences defined by
+    $$
+    \Delta y_i = y_{i+1} - y_i, \quad \Delta^2 y_i = \Delta(\Delta y_i), \text{ etc.}
+    $$
+
+#### Interpolating Polynomial
+The Newton forward interpolating polynomial of degree \(n\) is
+$$
+f(x) \approx y_0 + u\,\Delta y_0 + \frac{u(u-1)}{2!}\,\Delta^2 y_0
+                    + \frac{u(u-1)(u-2)}{3!}\,\Delta^3 y_0 + \cdots
+$$
+
+#### Features
+- Best suited when
+    $$
+    x \text{ lies near } x_0
+    $$
+- Uses entries from the top of the forward difference table.
+- Accuracy improves as more terms (and smoother functions) are used.
 
 ### Newton's Forward Interpolation Code
 ```cpp
-# Add your code here
+#include <bits/stdc++.h>
+using namespace std;
+
+
+int fact(int n)
+{
+    int f = 1;
+    for(int i = 2; i <= n; i++)
+        f *= i;
+    return f;
+}
+
+
+int detectOrder( vector<vector<double>>& diff, double eps = 1e-9)
+{
+    int n = diff.size();
+
+    for(int j = 1; j < n; j++)
+    {
+        bool allZero = true;
+        for(int i = 0; i < n - j; i++)
+        {
+            if (fabs(diff[i][j]) > eps)
+            {
+                allZero = false;
+                break;
+            }
+        }
+        if (allZero)
+            return j - 1;
+    }
+    return n - 1;
+}
+
+int main()
+{
+    ifstream inputFile("Input.txt");
+    ofstream outputFile("Output.txt");
+
+    if (!inputFile.is_open())
+    {
+        cout << "Error opening Input.txt\n";
+        return 1;
+    }
+
+    int testCases;
+    inputFile >> testCases;
+
+    for (int tc = 1; tc <= testCases; tc++)
+    {
+        int n;
+        inputFile >> n;
+
+        vector<double> x(n), y(n);
+        for (int i = 0; i < n; i++) inputFile >> x[i];
+        for (int i = 0; i < n; i++) inputFile >> y[i];
+
+        double X;
+        inputFile >> X;
+
+        cout << "Test Case " << tc << "\n";
+        outputFile << "Test Case " << tc << "\n";
+
+        double h = x[1] - x[0];
+        double u = (X - x[0]) / h;
+
+
+        vector<vector<double>> diff(n, vector<double>(n, 0.0));
+        for (int i = 0; i < n; i++)
+            diff[i][0] = y[i];
+
+        for (int j = 1; j < n; j++)
+            for (int i = 0; i < n - j; i++)
+                diff[i][j] = diff[i + 1][j - 1] - diff[i][j - 1];
+
+        cout << "Forward Difference Table:\n";
+        outputFile << "Forward Difference Table:\n";
+
+       cout << fixed << setprecision(2);
+outputFile << fixed << setprecision(2);
+
+for (int i = 0; i < n; i++)
+{
+
+    cout << setw(10) << diff[i][0];
+    outputFile << setw(10) << diff[i][0];
+
+
+    for (int j = 1; j < n - i; j++)
+    {
+        cout << setw(10) << diff[i][j];
+        outputFile << setw(10) << diff[i][j];
+    }
+
+    cout << "\n";
+    outputFile << "\n";
+}
+
+
+        double fx = diff[0][0];
+        double u_term = 1.0;
+
+        for (int k = 1; k < n; k++)
+        {
+            u_term *= (u - (k - 1));
+            fx += (u_term * diff[0][k]) / fact(k);
+        }
+
+        int order = detectOrder(diff);
+
+
+        double error = 0.0;
+        if (order + 1 < n)
+        {
+            double u_err = 1.0;
+            for (int i = 0; i <= order; i++)
+                u_err *= (u - i);
+
+            error = fabs((u_err * diff[0][order + 1]) / fact(order + 1));
+        }
+
+        cout << "Step size (h) = " << h << "\n";
+        cout << "u = " << u << "\n";
+        cout << "Detected Polynomial Order = " << order << "\n";
+        cout << "Interpolated value f(" << X << ") = "
+             << fixed << setprecision(2) << fx << "\n";
+        cout << "Estimated Forward Interpolation Error = "
+             << fixed << setprecision(2) << error << "\n\n";
+
+        outputFile << "Step size (h) = " << h << "\n";
+        outputFile << "u = " << u << "\n";
+        outputFile << "Detected Polynomial Order = " << order << "\n";
+        outputFile << "Interpolated value f(" << X << ") = "
+                   << fixed << setprecision(2) << fx << "\n";
+        outputFile << "Estimated Forward Interpolation Error = "
+                   << fixed << setprecision(2) << error << "\n\n";
+    }
+
+    inputFile.close();
+    outputFile.close();
+    return 0;
+}
+
 ```
 
 ### Newton's Forward Interpolation Input
 ```
-[Add your input format here]
+2
+5
+0 1 2 3 4
+1 2 5 10 17
+0.5
+6
+1 2 3 4 5 6
+1 8 27 64 125 216
+2.5
+
 ```
 
 ### Newton's Forward Interpolation Output
 ```
-[Add your output format here]
+Test Case 1
+Forward Difference Table:
+      1.00      1.00      2.00      0.00      0.00
+      2.00      3.00      2.00      0.00
+      5.00      5.00      2.00
+     10.00      7.00
+     17.00
+Step size (h) = 1.00
+u = 0.50
+Detected Polynomial Order = 2
+Interpolated value f(0.50) = 1.25
+Estimated Forward Interpolation Error = 0.00
+
+Test Case 2
+Forward Difference Table:
+      1.00      7.00     12.00      6.00      0.00      0.00
+      8.00     19.00     18.00      6.00      0.00
+     27.00     37.00     24.00      6.00
+     64.00     61.00     30.00
+    125.00     91.00
+    216.00
+Step size (h) = 1.00
+u = 1.50
+Detected Polynomial Order = 3
+Interpolated value f(2.50) = 15.62
+Estimated Forward Interpolation Error = 0.00
+
+
 ```
 
 ---
@@ -1143,7 +1366,56 @@ x5 = 1.18462
 ### Newton's Backward Interpolation Method
 
 ### Newton's Backward Interpolation Theory
-[Add your theory content here]
+#### Method used
+**Newton's Backward Difference Interpolation**
+
+#### Objective
+To approximate
+$$
+f(x)
+$$
+at a point
+$$
+x
+$$
+near the *end* of a table of equally spaced data points using backward differences.
+
+#### Data Requirement
+- Tabulated values:
+    $$
+    (x_i, y_i), \quad i = 0,1,\ldots,n
+    $$
+- Equal spacing
+    $$
+    h = x_{i+1} - x_i
+    $$
+
+#### Notation
+- x_n: last tabulated point
+- h: step size
+- u: parameter defined by
+    $$
+    u = \frac{x - x_n}{h}
+    $$
+- ∇y_i: backward differences defined by
+    $$
+    \nabla y_i = y_i - y_{i-1}, \quad \nabla^2 y_i = \nabla(\nabla y_i), \text{ etc.}
+    $$
+
+#### Interpolating Polynomial
+The Newton backward interpolating polynomial of degree \(n\) is
+$$
+f(x) \approx y_n + u\,\nabla y_n + \frac{u(u+1)}{2!}\,\nabla^2 y_n
+                    + \frac{u(u+1)(u+2)}{3!}\,\nabla^3 y_n + \cdots
+$$
+
+#### Features
+- Best suited when
+    $$
+    x \text{ lies near } x_n
+    $$
+- Uses entries from the bottom of the backward difference table.
+- Particularly useful when new data points are appended at the end.
 
 ### Newton's Backward Interpolation Code
 ```cpp
@@ -1276,12 +1548,32 @@ int main()
 
 ### Newton's Backward Interpolation Input
 ```
-[Add your input format here]
+1
+7
+0 1 2 3 4 5 6
+0 1 8 27 64 125 300
+5.3
+
 ```
 
 ### Newton's Backward Interpolation Output
 ```
-[Add your output format here]
+Test Case 1
+Backward Difference Table:
+      0.00
+      1.00      1.00
+      8.00      7.00      6.00
+     27.00     19.00     12.00      6.00
+     64.00     37.00     18.00      6.00      0.00
+    125.00     61.00     24.00      6.00      0.00      0.00
+    300.00    175.00    114.00     90.00     84.00     84.00     84.00
+h = 1.00
+u = -0.70
+Detected Polynomial Order = 6
+Interpolated value f(5.30) = 156.75
+Estimated Backward Interpolation Error = 0.00
+
+
 ```
 
 ---
@@ -1289,21 +1581,157 @@ int main()
 ### Divided Difference Method
 
 ### Divided Difference Theory
-[Add your theory content here]
+#### Method used
+**Newton's Divided Difference Interpolation**
+
+#### Objective
+To construct an interpolating polynomial for data points that may be **unequally spaced** in
+$$
+x
+$$
+
+#### Data Requirement
+- Distinct data points:
+    $$
+    (x_0, y_0), (x_1, y_1), \ldots, (x_n, y_n)
+    $$
+- No requirement of equal spacing in
+    $$
+    x_i
+    $$
+
+#### Divided Differences
+The first-order divided difference is
+$$
+f[x_i, x_{i+1}] = \frac{f(x_{i+1}) - f(x_i)}{x_{i+1} - x_i}.
+$$
+Higher-order divided differences are defined recursively as
+$$
+f[x_i, x_{i+1}, \dots, x_{i+k}] =
+\frac{f[x_{i+1}, \dots, x_{i+k}] - f[x_i, \dots, x_{i+k-1}]}{x_{i+k} - x_i}.
+$$
+
+#### Newton Divided Difference Polynomial
+The interpolating polynomial can be written as
+$$
+P_n(x) = f[x_0] + (x - x_0) f[x_0,x_1]
+    + (x - x_0)(x - x_1) f[x_0,x_1,x_2]
+    + \cdots
+    + (x - x_0)\cdots(x - x_{n-1}) f[x_0,\dots,x_n].
+$$
+
+#### Features
+- Works for both equally and unequally spaced nodes.
+- Coefficients can be updated easily when new data points are added.
+- Numerically stable when nodes are distinct and well separated.
 
 ### Divided Difference Code
 ```cpp
-# Add your code here
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    ifstream inputFile("Input.txt");
+    ofstream outputFile("Output.txt");
+
+    if(!inputFile.is_open())
+        return 1;
+
+    int T;
+    inputFile >> T;
+
+    cout << fixed << setprecision(2);
+    outputFile << fixed << setprecision(2);
+
+    for(int tc = 1; tc <= T; tc++)
+    {
+        int n;
+        inputFile >> n;
+
+        vector<double> x(n), y(n);
+        for(int i = 0; i < n; i++) inputFile >> x[i];
+        for(int i = 0; i < n; i++) inputFile >> y[i];
+
+        double x_extra, y_extra;
+        inputFile >> x_extra >> y_extra;
+
+        double X;
+        inputFile >> X;
+
+        vector<double> x_all = x;
+        vector<double> y_all = y;
+        x_all.push_back(x_extra);
+        y_all.push_back(y_extra);
+
+        vector<vector<double>> dd(n+1, vector<double>(n+1, 0.0));
+
+        for(int i = 0; i <= n; i++)
+            dd[i][0] = y_all[i];
+
+        for(int j = 1; j <= n; j++)
+            for(int i = 0; i <= n - j; i++)
+                dd[i][j] = (dd[i+1][j-1] - dd[i][j-1]) / (x_all[i+j] - x_all[i]);
+
+        double fx = dd[0][0];
+        double term = 1.0;
+
+        for(int i = 1; i < n; i++)
+        {
+            term *= (X - x[i-1]);
+            fx += term * dd[0][i];
+        }
+
+        double prod = 1.0;
+        for(int i = 0; i < n; i++)
+            prod *= (X - x[i]);
+
+        double error = fabs(dd[0][n] * prod);
+
+        cout << "Test Case " << tc << "\n";
+        cout << "Divided Difference Table:\n";
+
+        for(int i = 0; i <= n; i++)
+        {
+            for(int j = 0; j <= n - i; j++)
+                cout << setw(12) << dd[i][j];
+            cout << "\n";
+        }
+
+        cout << "Interpolated value f(" << X << ") = " << fx << "\n";
+        cout << "Truncation Error = " << error << "\n\n";
+
+        outputFile << "Test Case " << tc << "\n";
+        outputFile << "Interpolated value f(" << X << ") = " << fx << "\n";
+        outputFile << "Truncation Error = " << error << "\n\n";
+    }
+
+    inputFile.close();
+    outputFile.close();
+    return 0;
+}
+
 ```
 
 ### Divided Difference Input
 ```
-[Add your input format here]
+1
+4
+0 1 2 3
+0 1 8 27
+4
+70
+2.5
+
 ```
 
 ### Divided Difference Output
 ```
-[Add your output format here]
+Test Case 1
+Interpolated value f(2.50) = 15.62
+Truncation Error = 0.23
+
+
 ```
 
 ---
@@ -1784,21 +2212,135 @@ y = 3 + 2x + 1x^2
 ### Runge Kutta Method 
 
 ### Runge Kutta Theory
-[Add your theory content here]
+#### Method used
+**Runge–Kutta Method (Classical 4th Order RK)**
+
+#### Objective
+To obtain a numerical solution of an initial value problem
+$$
+\frac{dy}{dx} = f(x, y), \quad y(x_0) = y_0
+$$
+by advancing the solution from x_n to x_{n+1} = x_n + h with high accuracy.
+
+#### Notation
+
+- `x_n`: current point
+- `y_n`: current value  
+- `h`: step size
+- `k_1, k_2, k_3, k_4`: slope estimates at different points
+
+#### Basic Idea
+The 4th order Runge–Kutta method computes a weighted average of slopes:
+$$
+\begin{aligned}
+k_1 &= f(x_n, y_n),\\
+k_2 &= f\Big(x_n + \tfrac{h}{2}, y_n + \tfrac{h}{2} k_1\Big),\\
+k_3 &= f\Big(x_n + \tfrac{h}{2}, y_n + \tfrac{h}{2} k_2\Big),\\
+k_4 &= f(x_n + h, y_n + h k_3).
+\end{aligned}
+$$
+Then the next value is
+$$
+y_{n+1} = y_n + \frac{h}{6} (k_1 + 2k_2 + 2k_3 + k_4).
+$$
+
+#### Features
+- Local truncation error of order
+    $$
+    O(h^5); \quad \text{global error} \ O(h^4)
+    $$
+- Does not require evaluation of higher derivatives of
+    $$
+    f
+    $$
+- Widely used as a standard one-step method for ODEs.
 
 ### Runge Kutta Code
 ```cpp
-# Add your code here
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+double f(double x, double y)
+{
+    return x + y;
+}
+
+double rungeKutta(double x0, double y0, double h, double xn)
+{
+    double x = x0;
+    double y = y0;
+
+    while (x  < xn)
+    {
+        double k1 = h * f(x, y);
+        double k2 = h * f(x + h/2.0, y + k1/2.0);
+        double k3 = h * f(x + h/2.0, y + k2/2.0);
+        double k4 = h * f(x + h, y + k3);
+
+        y = y + (k1 + 2*k2 + 2*k3 + k4) / 6.0;
+        x = x + h;
+    }
+
+    return y;
+}
+
+int main()
+{
+    ifstream fin("Input.txt");
+    ofstream fout("Output.txt");
+
+    if (!fin.is_open())
+    {
+        cout << "Error: Input.txt not found\n";
+        return 0;
+    }
+
+    double x0, y0, h, xn;
+    fin >> x0 >> y0 >> h >> xn;
+
+    double result = rungeKutta(x0, y0, h, xn);
+
+    cout << "Runge-Kutta 4th Order Method\n";
+    cout << "----------------------------\n";
+    cout << "Differential equation: dy/dx = x + y\n";
+    cout << "Initial condition: y(" << x0 << ") = " << y0 << "\n";
+    cout << "Step size (h): " << h << "\n";
+    cout << "Required value at x = " << xn << "\n";
+    cout << "Computed solution: y(" << xn << ") = " << result << "\n";
+
+    fout << "Runge-Kutta 4th Order Method\n";
+    fout << "----------------------------\n";
+    fout << "Differential equation: dy/dx = x + y\n";
+    fout << "Initial condition: y(" << x0 << ") = " << y0 << "\n";
+    fout << "Step size (h): " << h << "\n";
+    fout << "Required value at x = " << xn << "\n";
+    fout << "Computed solution: y(" << xn << ") = " << result << "\n";
+
+    fin.close();
+    fout.close();
+
+    return 0;
+}
+
 ```
 
 ### Runge Kutta Input
 ```
-[Add your input format here]
+0 1 0.1 1
+
 ```
 
 ### Runge Kutta Output
 ```
-[Add your output format here]
+Runge-Kutta 4th Order Method
+----------------------------
+Differential equation: dy/dx = x + y
+Initial condition: y(0) = 1
+Step size (h): 0.1
+Required value at x = 1
+Computed solution: y(1) = 3.43656
+
 ```
 
 ---
@@ -1806,7 +2348,101 @@ y = 3 + 2x + 1x^2
 ### Numerical Differentiation Method
 
 ### Numerical Differentiation Theory
-[Add your theory content here]
+#### Method used
+**Numerical Differentiation using Interpolation (Forward and Backward Differences)**
+
+#### Objective
+To approximate derivatives
+$$
+f'(x), f''(x), \ldots
+$$
+from tabulated values of
+$$
+f(x)
+$$
+when an explicit analytic form is not available.
+
+#### Data Requirement
+- Tabulated values (x_i, y_i) with equal spacing
+    $$
+    h = x_{i+1} - x_i
+    $$
+
+#### Basic Idea
+1. Construct an interpolating polynomial for
+   $$
+   f(x)
+   $$
+   using either:
+   - Newton's forward interpolation (when differentiating near the beginning of the table), or
+   - Newton's backward interpolation (when differentiating near the end of the table).
+2. Differentiate the interpolating polynomial analytically and then evaluate the derivative at the required point.
+
+#### Example: First Derivative – Forward Formula at x_0
+Using the Newton forward polynomial and differentiating, one obtains a formula of the form
+$$
+f'(x_0) \approx \frac{1}{h}\Big(a_1 \Delta y_0 + a_2 \Delta^2 y_0 + a_3 \Delta^3 y_0 + \cdots \Big),
+$$
+where \(\Delta^k y_0\) are forward differences and \(a_k\) are known constants depending on the chosen order of approximation.
+
+#### Example: First Derivative – Backward Formula at x_n
+Similarly, using Newton's backward polynomial,
+$$
+f'(x_n) \approx \frac{1}{h}\Big(b_1 \nabla y_n + b_2 \nabla^2 y_n + b_3 \nabla^3 y_n + \cdots \Big),
+$$
+where \(\nabla^k y_n\) are backward differences and \(b_k\) are known constants.
+
+#### Second Derivative Approximation
+By differentiating the interpolating polynomial twice, we obtain formulas for the second derivative.
+
+- **At the beginning of the table (forward / using forward differences):**
+    $$
+    f''(x_0) \approx \frac{\Delta^2 y_0}{h^2}
+    = \frac{y_2 - 2y_1 + y_0}{h^2}.
+    $$
+
+- **At the end of the table (backward / using backward differences):**
+    $$
+    f''(x_n) \approx \frac{\nabla^2 y_n}{h^2}
+    = \frac{y_n - 2y_{n-1} + y_{n-2}}{h^2}.
+    $$
+
+Higher-order formulas (involving more difference terms) can be derived in the same way when greater accuracy is required.
+
+#### Interpolation Formulas Used
+For reference, the interpolation polynomials used in numerical differentiation are:
+
+- **Forward interpolation (around x_0):**
+    $$
+    f(x) \approx y_0 + u\,\Delta y_0 + \frac{u(u-1)}{2!}\,\Delta^2 y_0
+                        + \frac{u(u-1)(u-2)}{3!}\,\Delta^3 y_0 + \cdots,
+    $$
+    where
+    $$
+    u = \frac{x - x_0}{h}
+    $$
+
+- **Backward interpolation (around x_n):**
+    $$
+    f(x) \approx y_n + u\,\nabla y_n + \frac{u(u+1)}{2!}\,\nabla^2 y_n
+                        + \frac{u(u+1)(u+2)}{3!}\,\nabla^3 y_n + \cdots,
+    $$
+    where
+    $$
+    u = \frac{x - x_n}{h}
+    $$
+
+#### Features
+- Allows estimation of derivatives using only function values.
+- Different formulas (forward, backward, central) can be chosen based on where the point lies in the table and the desired accuracy.
+- Accuracy depends on the step size
+    $$
+    h
+    $$
+    and smoothness of
+    $$
+    f(x)
+    $$
 
 ### Numerical Differentiation Code
 ```cpp
