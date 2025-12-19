@@ -1,9 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Solve 3x3 linear system using Gauss–Jordan elimination
-vector<double> solve3(vector<vector<double>> A, vector<double> B) {
-    int n = 3;
+// Solve nXn linear system using Gauss–Jordan elimination
+vector<double> solveN(vector<vector<double>> A, vector<double> B) {
+
+    int n = A.size();
 
     for (int i = 0; i < n; i++) {
 
@@ -19,7 +20,13 @@ vector<double> solve3(vector<vector<double>> A, vector<double> B) {
         swap(B[i], B[pivot]);
 
         double div = A[i][i];
-        for (int j = i; j < n; j++)
+        if (fabs(div) < 1e-12) {
+            cout << "Singular system detected. No unique solution." << endl;
+            return {};   // return empty vector
+        }
+
+        // Normalize pivot row
+        for (int j = 0; j < n; j++)
             A[i][j] /= div;
         B[i] /= div;
 
@@ -36,6 +43,7 @@ vector<double> solve3(vector<vector<double>> A, vector<double> B) {
 
     return B;
 }
+
 
 int main() {
 
@@ -78,7 +86,12 @@ int main() {
 
     vector<double> B = { sy, sxy, sx2y };
 
-    vector<double> sol = solve3(A, B);
+    vector<double> sol = solveN(A, B);
+
+    if (sol.empty()) {
+    cout << "Solution could not be computed.\n";
+    return 0;
+    }
 
     // ---- Output ----
     out << "Quadratic Polynomial Fit:\n";
