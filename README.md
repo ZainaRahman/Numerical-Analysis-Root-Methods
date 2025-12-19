@@ -122,7 +122,64 @@
 ### Gauss Elimination Method
 
 #### Gauss Elimination Theory
-[Add your theory content here]
+
+### Method used
+**Gauss Elimination Method**
+
+### Objective
+To solve a system of linear algebraic equations by transforming it into an **upper triangular system**, followed by **back substitution**.
+
+### Data Requirement
+A system of `n` linear equations:
+```
+a11x1 + a12x2 + ... + a1nxn = b1
+a21x1 + a22x2 + ... + a2nxn = b2
+...
+an1x1 + an2x2 + ... + annxn = bn
+```
+
+Matrix form:
+```
+AX = B
+```
+
+### Notation
+- `A = [aij]` : coefficient matrix of order `n × n`
+- `X = [x1, x2, ..., xn]ᵀ` : vector of unknowns
+- `B = [b1, b2, ..., bn]ᵀ` : constant vector
+
+### Core Idea
+The system is simplified by eliminating variables using **elementary row operations** to obtain an upper triangular matrix.
+
+### Elimination Approach (Formula)
+To eliminate element `aij` (where `j < i`):
+```
+Ri ← Ri − (aij / ajj) Rj
+```
+
+
+### Phases Involved
+
+#### Forward Elimination
+Transforms the augmented matrix `[A | B]` into an **upper triangular form**.
+
+#### Back Substitution
+Solutions are obtained using:
+```
+xn = bn / ann
+xi = (1 / aii) [ bi − Σ (aij xj) ], j = i+1 to n
+```
+
+### Accuracy Considerations
+- Exact in theory
+- Rounding errors may occur in floating-point arithmetic
+- Pivoting improves numerical stability
+
+### Applicability
+- Suitable for small to medium-sized systems
+- Widely used due to conceptual simplicity
+
+
 
 #### Gauss Elimination Code
 ```cpp
@@ -294,7 +351,55 @@ x3 = -1.0000
 ### Gauss Jordan Elimination Method
 
 #### Gauss Jordan Theory
-[Add your theory content here]
+### Method used
+**Gauss–Jordan Elimination Method**
+
+### Objective
+To solve a system of linear equations by reducing the augmented matrix directly to **Reduced Row Echelon Form (RREF)**.
+
+### Data Requirement
+Augmented matrix form:
+```
+[A | B]
+```
+
+### Notation
+- `aij` : element of coefficient matrix
+- `bi`  : element of constant vector
+
+### Core Idea
+Each pivot element is made **unity**, and all other elements in its column are eliminated, producing an identity matrix.
+
+### Elimination Approach (Formulae)
+
+**Normalization of pivot row:**
+```
+Ri ← Ri / aii
+```
+
+**Elimination of other rows:**
+```
+Rj ← Rj − aji Ri (j ≠ i)
+```
+### Matrix Form Obtained
+```
+[I | X]
+```
+
+where `I` is the identity matrix and `X` contains the solution.
+
+### Evaluation Process
+The solution is obtained directly as:
+```
+xi = bi
+```
+### Accuracy Considerations
+- More computationally expensive than Gauss Elimination
+- Sensitive to rounding errors for large systems
+
+### Applicability
+- Used when a direct solution or matrix inverse is required
+
 
 #### Gauss Jordan Code
 ```cpp
@@ -473,7 +578,54 @@ x5 = 1.1846
 ### LU Decomposition Method
 
 #### LU Decomposition Theory
-[Add your theory content here]
+### Method used
+**LU Decomposition Method**
+
+### Objective
+To solve a system of linear equations by factorizing the coefficient matrix into lower and upper triangular matrices.
+
+### Data Requirement
+A square matrix with non-zero pivots.
+
+### Core Idea (Formula)
+```
+A = LU
+```
+
+### Notation
+- `L = [lij]` : lower triangular matrix
+- `U = [uij]` : upper triangular matrix
+- `A` : coefficient matrix
+- `X` : solution vector
+- `B` : constant vector
+
+### Solution Process
+
+**Step 1:** Solve
+```
+LY = B
+```
+using forward substitution:
+```
+yi = bi − Σ (lij yj), j = 1 to i−1
+```
+
+**Step 2:** Solve
+```
+UX = Y
+```
+using back substitution:
+```
+xi = (1 / uii) [ yi − Σ (uij xj) ], j = i+1 to n
+```
+
+### Accuracy Considerations
+- More efficient than repeated Gauss Elimination
+- Numerical stability improves with pivoting
+
+### Applicability
+- Ideal for solving multiple systems with the same coefficient matrix
+
 
 #### LU Decomposition Code
 ```cpp
@@ -664,7 +816,48 @@ x5 = 1.18462
 ### Matrix Inversion
 
 #### Matrix Inversion Theory
-[Add your theory content here]
+## 4. Matrix Inversion
+
+### Method used
+**Matrix Inversion Method**
+
+### Objective
+To solve a system of linear equations using the inverse of the coefficient matrix.
+
+### Data Requirement
+A square, non-singular matrix (`det(A) ≠ 0`).
+
+### Core Idea (Formula)
+Given:
+```
+AX = B
+```
+The solution is:
+```
+X = A⁻¹ B
+```
+### Notation
+- `A⁻¹` : inverse of matrix `A`
+- `I` : identity matrix
+
+### Inversion Approach
+The inverse is computed using Gauss–Jordan elimination:
+```
+[A | I] → [I | A⁻¹]
+```
+
+### Evaluation Process
+Once `A⁻¹` is obtained, the solution vector is computed using matrix multiplication.
+
+### Accuracy Considerations
+- Computationally expensive
+- Sensitive to rounding errors
+- Not recommended for large systems
+
+### Applicability
+- Useful for theoretical analysis
+- Suitable for small systems only
+
 
 #### Matrix Inversion Code
 ```cpp
