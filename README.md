@@ -2377,50 +2377,6 @@ y = 3 + 2x + 1x^2
 
 ### Solution of Differential Equations
 
-### Equal Interval Interpolation Method
-
-### Equal Interval Interpolation Theory
-[Add your theory content here]
-
-### Equal Interval Interpolation Code
-```cpp
-# Add your code here
-```
-
-### Equal Interval Interpolation Input
-```
-[Add your input format here]
-```
-
-### Equal Interval Interpolation Output
-```
-[Add your output format here]
-```
-
----
-
-### Second Order Derivative Method 
-
-### Second Order Derivative Theory
-[Add your theory content here]
-
-### Second Order Derivative Code
-```cpp
-# Add your code here
-```
-
-### Second Order Derivative Input
-```
-[Add your input format here]
-```
-
-### Second Order Derivative Output
-```
-[Add your output format here]
-```
-
----
-
 ### Runge Kutta Method 
 
 ### Runge Kutta Theory
