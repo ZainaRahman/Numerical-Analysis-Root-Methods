@@ -11,7 +11,7 @@ int fact(int n)
 }
 
 
-int detectOrder(const vector<vector<double>>& diff, double eps = 1e-9)
+int detectOrder( vector<vector<double>>& diff, double eps = 1e-9)
 {
     int n = diff.size();
 

@@ -1,0 +1,15 @@
+Test Case 1
+Backward Difference Table:
+      0.00
+      1.00      1.00
+      8.00      7.00      6.00
+     27.00     19.00     12.00      6.00
+     64.00     37.00     18.00      6.00      0.00
+    125.00     61.00     24.00      6.00      0.00      0.00
+    300.00    175.00    114.00     90.00     84.00     84.00     84.00
+h = 1.00
+u = -0.70
+Detected Polynomial Order = 6
+Interpolated value f(5.30) = 156.75
+Estimated Backward Interpolation Error = 0.00
+
