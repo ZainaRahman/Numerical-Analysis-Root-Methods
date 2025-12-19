@@ -1036,21 +1036,83 @@ x5 = 1.18462
 ### Bisection Method
 
 ### Bisection Theory
-[Add your theory content here]
+#### Objective
+To find a root of a nonlinear algebraic equation.
+
+#### Data Requirement
+A polynomial equation of `n` degree:
+
+  - a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> + … + a<sub>2</sub>x<sup>2</sup> + a<sub>1</sub>x + a<sub>0</sub> = 0
+
+#### Core Idea
+It repeatedly bisects an interval and then selects a subinterval in which a root must lie. Always converges if f(a) · f(b) < 0  
+**Formula:**
+$$x_{n+1} = \frac{a + b}{2}$$
 
 ### Bisection Code
 ```cpp
-# Add your code here
+#include <bits/stdc++.h>
+using namespace std;
+
+double f(double x, vector<double>& coef) {
+    int n = coef.size() - 1;
+    double s = 0;
+    for (int i = 0; i <= n; i++) s += coef[i] * pow(x, n - i);
+    return s;
+}
+void printEq(ofstream &out, vector<double>& coef) {
+    int n = coef.size() - 1;
+    out << "Equation: ";
+    for (int i = 0; i <= n; i++) {
+        out << coef[i] << "*x^" << (n - i);
+        if (i != n) out << " + ";
+    }
+    out << endl;
+}
+int main() {
+    ifstream in("input.txt");
+    ofstream out("output.txt");
+
+    int deg, maxit, it;
+    double lowl, upl, err, root, prev;
+
+    in >> deg;
+    vector<double> coef(deg + 1);
+    for (int i = 0; i <= deg; i++) in >> coef[i];
+    in >> lowl >> upl >> err >> maxit;
+    printEq(out,coef);
+    if (f(lowl, coef) * f(upl, coef) >= 0) {
+        out << "Invalid interval\n";
+        return 0;
+    }
+
+    for (it = 1; it <= maxit; it++) {
+        prev = root;
+        root = (lowl + upl) / 2.0;
+
+        if (fabs(root - prev) < err || fabs(f(root, coef)) < err) break;
+
+        f(lowl, coef) * f(root, coef) < 0 ? upl = root : lowl = root;
+    }
+
+    out << "Bisection Root = " << root << "\n";
+    out << "Iterations = " << it << "\n";
+    return 0;
+}
 ```
 
 ### Bisection Input
 ```
-[Add your input format here]
+3
+1 0 -4 -9
+0 5 .0001 30
 ```
 
 ### Bisection Output
 ```
-[Add your output format here]
+Equation: 1*x^3 + 0*x^2 + -4*x^1 + -9*x^0
+Bisection Root = 2.70653
+Iterations = 16
 ```
 
 ---
@@ -1058,21 +1120,91 @@ x5 = 1.18462
 ### False Position Method
 
 ### False Position Theory
-[Add your theory content here]
+#### Objective
+To solve nonlinear algebraic equation using a bracketing method based on linear interpolation.
+
+#### Data Requirement
+A polynomial equation of `n` degree:
+
+  - a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> + … + a<sub>2</sub>x<sup>2</sup> + a<sub>1</sub>x + a<sub>0</sub> = 0
+
+#### Core Idea
+Uses linear interpolation between two points where the function has opposite signs. Draws a straight line connecting the function values at the endpoints and finds where it crosses the x-axis. More efficient than bisection method. 
+
+**Formula:**
+$$x_{n+1} = \frac{a \cdot f(b) - b \cdot f(a)}{f(b) - f(a)}$$
 
 ### False Position Code
 ```cpp
-# Add your code here
+#include <bits/stdc++.h>
+using namespace std;
+
+double f(double x, vector<double>& coef) {
+    int n = coef.size() - 1;
+    double s = 0;
+    for (int i = 0; i <= n; i++)
+        s += coef[i] * pow(x, n - i);
+    return s;
+}
+
+void printEq(ofstream &out, vector<double>& coef) {
+    int n = coef.size() - 1;
+    out << "Equation: ";
+    for (int i = 0; i <= n; i++) {
+        out << coef[i] << "*x^" << (n - i);
+        if (i != n) out << " + ";
+    }
+    out << endl;
+}
+
+int main() {
+    ifstream in("input.txt");
+    ofstream out("output.txt");
+
+    int deg, maxit,it;
+    double lowl, upl, err, root;
+    in >> deg;
+
+    vector<double> coef(deg + 1);
+    for (int i = 0; i <= deg; i++) in >> coef[i];
+
+    in >> lowl >> upl >> err >> maxit;
+
+    printEq(out, coef);
+
+    if (f(lowl, coef) * f(upl, coef) >= 0) {
+        out << "Invalid interval"<< endl;
+        return 0;
+    }
+
+    double pre_root; root=lowl;
+    for (it = 1; it <= maxit; it++) {
+        pre_root = root;
+        root = (lowl * f(upl, coef) - upl * f(lowl, coef)) / (f(upl, coef) - f(lowl, coef));
+
+        if (fabs(root - pre_root) < err || fabs(f(root, coef)) < err) break;
+
+        f(lowl, coef) * f(root, coef) < 0 ? upl = root : lowl = root;
+    }
+
+    out << "False Position Root = " << root << endl;
+    out << "iterations = " << it << endl;
+    return 0;
+}
 ```
 
 ### False Position Input
 ```
-[Add your input format here]
+3
+1 0 -4 -9
+0 5 .0001 30
 ```
 
 ### False Position Output
 ```
-[Add your output format here]
+Equation: 1*x^3 + 0*x^2 + -4*x^1 + -9*x^0
+False Position Root = 2.70642
+iterations = 21
 ```
 
 ---
@@ -1080,21 +1212,76 @@ x5 = 1.18462
 ### Secant Method
 
 #### Secant Theory
-[Add your theory content here]
+#### Objective
+To solve nonlinear algebraic equation using an iterative method that approximates the derivative.
+
+#### Data Requirement
+A polynomial equation of `n` degree:
+
+  - a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> + … + a<sub>2</sub>x<sup>2</sup> + a<sub>1</sub>x + a<sub>0</sub> = 0
+
+#### Core Idea
+Uses two initial approximations and draws a secant line through them to find the next approximation. Does not require derivative computation unlike Newton-Raphson.  
+**Formula:**
+$$x_{n+1} = x_n - \frac{f(x_n)(x_n - x_{n-1})}{f(x_n) - f(x_{n-1})}$$
 
 #### Secant Code
 ```cpp
-# Add your code here
+#include <bits/stdc++.h>
+using namespace std;
+
+double f(double x, vector<double>& coef) {
+    int n = coef.size() - 1;
+    double s = 0;
+    for (int i = 0; i <= n; i++)
+        s += coef[i] * pow(x, n - i);
+    return s;
+}
+void printEq(ofstream &out, vector<double>& coef) {
+    int n = coef.size() - 1;
+    out << "Equation: ";
+    for (int i = 0; i <= n; i++) {
+        out << coef[i] << "*x^" << (n - i);
+        if (i != n) out << " + ";
+    }
+    out << endl;
+}
+int main() {
+    ifstream in("input.txt");
+    ofstream out("output.txt");
+
+    int deg, maxit, it;
+    double x0, x1, root, err;
+
+    in >> deg;
+    vector<double> coef(deg + 1);
+    for (int i = 0; i <= deg; i++) in >> coef[i];
+    in >> x0 >> x1 >> err >> maxit;
+    printEq(out,coef);
+    for (it = 1; it <= maxit; it++) {
+        root = x1 - f(x1, coef) * (x1 - x0) / (f(x1, coef) - f(x0, coef));
+        if (fabs(root - x1) < err || fabs(f(root, coef)) < err) break;
+        x0 = x1;
+        x1 = root;
+    }
+    out << "Secant Root = " << root << "\n";
+    out << "Iterations = " << it << "\n";
+    return 0;
+}
 ```
 
 #### Secant Input
 ```
-[Add your input format here]
+3
+1 0 -1 -2
+1 2 0.0001 20
 ```
 
 #### Secant Output
 ```
-[Add your output format here]
+Equation: 1*x^3 + 0*x^2 + -1*x^1 + -2*x^0
+Secant Root = 1.52138
+Iterations = 5
 ```
 
 ---
@@ -1102,21 +1289,88 @@ x5 = 1.18462
 ### Newton Raphson Method
 
 #### Newton Raphson Theory
-[Add your theory content here]
+#### Objective
+To solve nonlinear algebraic equation using tangent line approximation at each iteration.
+
+#### Data Requirement
+A polynomial equation of `n` degree:
+
+  - a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> + … + a<sub>2</sub>x<sup>2</sup> + a<sub>1</sub>x + a<sub>0</sub> = 0
+
+#### Core Idea
+Starts with an initial guess and uses the tangent line at that point to find a better approximation. Requires both function and its derivative. Converges quadratically when close to root.
+
+**Formula:**
+$$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$$
 
 #### Newton Raphson Code
 ```cpp
-# Add your code here
+#include <bits/stdc++.h>
+using namespace std;
+
+double f(double x, vector<double>& coef) {
+    int n = coef.size() - 1;
+    double s = 0;
+    for (int i = 0; i <= n; i++)
+        s += coef[i] * pow(x, n - i);
+    return s;
+}
+
+double df(double x, vector<double>& coef) {
+    int n = coef.size() - 1;
+    double s = 0;
+    for (int i = 0; i < n; i++)
+        s += coef[i] * (n - i) * pow(x, n - i - 1);
+    return s;
+}
+void printEq(ofstream &out, vector<double>& coef) {
+    int n = coef.size() - 1;
+    out << "Equation: ";
+    for (int i = 0; i <= n; i++) {
+        out << coef[i] << "*x^" << (n - i);
+        if (i != n) out << " + ";
+    }
+    out << endl;
+}
+int main() {
+    ifstream in("input.txt");
+    ofstream out("output.txt");
+
+    int deg, maxit, it;
+    double x0, root, err;
+
+    in >> deg;
+    vector<double> coef(deg + 1);
+    for (int i = 0; i <= deg; i++) in >> coef[i];
+    in >> x0 >> err >> maxit;
+    printEq(out,coef);
+    for (it = 1; it <= maxit; it++) {
+        if (fabs(df(x0, coef)) < 1e-12) {
+            out << "Derivative too small\n";
+            return 0;
+        }
+        root = x0 - f(x0, coef) / df(x0, coef);
+        if (fabs(root - x0) < err || fabs(f(root, coef)) < err) break;
+        x0 = root;
+    }
+    out << "Newton-Raphson Root = " << root << "\n";
+    out << "Iterations = " << it << "\n";
+    return 0;
+}
 ```
 
 #### Newton Raphson Input
 ```
-[Add your input format here]
+3
+1 0 -1 -2
+1.5 0.0001 20
 ```
 
 #### Newton Raphson Output
 ```
-[Add your output format here]
+Equation: 1*x^3 + 0*x^2 + -1*x^1 + -2*x^0
+Newton-Raphson Root = 1.52138
+Iterations = 2
 ```
 
 ---
@@ -2493,21 +2747,92 @@ For reference, the interpolation polynomials used in numerical differentiation a
 ### Simpson's One-Third Rule
 
 ### Simpson's One-Third Rule Theory
-[Add your theory content here]
+#### Objective
+To approximate the definite integral of a function using parabolic interpolation.
+
+#### Data Requirement
+A polynomial equation of `n` degree:
+
+  - a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> + … + a<sub>2</sub>x<sup>2</sup> + a<sub>1</sub>x + a<sub>0</sub> = 0
+
+Integration limits: `[a, b]` and number of subintervals `n` (must be even)
+
+#### Core Idea
+Fit a parabola → to approximate the curve   
+Integrate the parabola → to approximate the area
+
+Divides the interval into an even number of subintervals and fits parabolas through groups of three consecutive points. Once a parabola is fitted through three points, that parabola can be integrated exactly using basic calculus.
+**Formula:**
+$$\int_a^b f(x)dx \approx \frac{h}{3}[f(x_0) + 4\sum_{i=odd}f(x_i) + 2\sum_{i=even}f(x_i) + f(x_n)]$$
+where $h = \frac{b-a}{n}$
 
 ### Simpson's One-Third Rule Code
 ```cpp
-# Add your code here
+#include <bits/stdc++.h>
+using namespace std;
+
+double f(double x, vector<double>& coef) {
+    int n = coef.size() - 1;
+    double s = 0;
+    for (int i = 0; i <= n; i++)
+        s += coef[i] * pow(x, n - i);
+    return s;
+}
+void printEq(ofstream &out, vector<double>& coef) {
+    int n = coef.size() - 1;
+    out << "Equation: ";
+    for (int i = 0; i <= n; i++) {
+        out << coef[i] << "*x^" << (n - i);
+        if (i != n) out << " + ";
+    }
+    out << endl;
+}
+int main() {
+    ifstream in("input.txt");
+    ofstream out("output.txt");
+
+    int deg, n;
+    double a, b, h, result = 0;
+
+    in >> deg;
+    vector<double> coef(deg + 1);
+    for (int i = 0; i <= deg; i++) in >> coef[i];
+
+    in >> a >> b >> n;
+    printEq(out,coef);
+    if (n % 2 != 0) {
+        out << "Number of subintervals must be even\n";
+        return 0;
+    }
+
+    h = (b - a) / n;
+
+    result = f(a, coef) + f(b, coef);
+
+    for (int i = 1; i < n; i++) {
+        double x = a + i * h;
+        if (i % 2 == 0) result += 2 * f(x, coef);
+        else result += 4 * f(x, coef);
+    }
+
+    result *= h / 3.0;
+
+    out << "Simpson 1/3 Rule Result = " << result << endl;
+    return 0;
+}
 ```
 
 ### Simpson's One-Third Rule Input
 ```
-[Add your input format here]
+3
+1 2 0 1
+0 1 6
 ```
 
 ### Simpson's One-Third Rule Output
 ```
-[Add your output format here]
+Equation: 1*x^3 + 2*x^2 + 0*x^1 + 1*x^0
+Simpson 1/3 Rule Result = 1.91667
 ```
 
 ---
@@ -2515,21 +2840,89 @@ For reference, the interpolation polynomials used in numerical differentiation a
 ### Simpson's Three-Eighths Rule 
 
 ### Simpson's Three-Eighths Rule Theory
-[Add your theory content here]
+#### Objective
+To approximate the definite integral of a function using cubic interpolation.
+
+#### Data Requirement
+A polynomial equation of `n` degree:
+
+  - a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> + … + a<sub>2</sub>x<sup>2</sup> + a<sub>1</sub>x + a<sub>0</sub> = 0
+
+Integration limits: `[a, b]` and number of subintervals `n` (must be multiple of 3)
+
+#### Core Idea
+Divides the interval into subintervals (multiple of 3) and fits cubic polynomials through groups of four consecutive points. Provides higher accuracy for functions with higher-order derivatives.  
+**Formula:**
+$$\int_a^b f(x)dx \approx \frac{3h}{8}[f(x_0) + 3\sum_{i \neq 3k}f(x_i) + 2\sum_{i=3k}f(x_i) + f(x_n)]$$
+where $h = \frac{b-a}{n}$
 
 ### Simpson's Three-Eighths Rule Code
 ```cpp
-# Add your code here
+#include <bits/stdc++.h>
+using namespace std;
+
+double f(double x, vector<double>& coef) {
+    int n = coef.size() - 1;
+    double s = 0;
+    for (int i = 0; i <= n; i++)
+        s += coef[i] * pow(x, n - i);
+    return s;
+}
+void printEq(ofstream &out, vector<double>& coef) {
+    int n = coef.size() - 1;
+    out << "Equation: ";
+    for (int i = 0; i <= n; i++) {
+        out << coef[i] << "*x^" << (n - i);
+        if (i != n) out << " + ";
+    }
+    out << endl;
+}
+int main() {
+    ifstream in("input.txt");
+    ofstream out("output.txt");
+
+    int deg, n;
+    double a, b, h, result = 0;
+
+    in >> deg;
+    vector<double> coef(deg + 1);
+    for (int i = 0; i <= deg; i++) in >> coef[i];
+
+    in >> a >> b >> n;
+    printEq(out,coef);
+    if (n % 3 != 0) {
+        out << "Number of subintervals must be multiple of 3\n";
+        return 0;
+    }
+
+    h = (b - a) / n;
+
+    result = f(a, coef) + f(b, coef);
+
+    for (int i = 1; i < n; i++) {
+        double x = a + i * h;
+        if (i % 3 == 0) result += 2 * f(x, coef);
+        else result += 3 * f(x, coef);
+    }
+
+    result *= 3 * h / 8.0;
+
+    out << "Simpson 3/8 Rule Result = " << result << endl;
+    return 0;
+}
 ```
 
 ### Simpson's Three-Eighths Rule Input
 ```
-[Add your input format here]
+4
+1 0 0 1 1
+0 3 6
 ```
 
 ### Simpson's Three-Eighths Rule Output
 ```
-[Add your output format here]
+Equation: 1*x^4 + 0*x^3 + 0*x^2 + 1*x^1 + 1*x^0
+Simpson 3/8 Rule Result = 56.1562
 ```
 
 ---
