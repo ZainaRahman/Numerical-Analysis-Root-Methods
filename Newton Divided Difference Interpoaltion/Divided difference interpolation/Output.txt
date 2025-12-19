@@ -1,0 +1,4 @@
+Test Case 1
+Interpolated value f(2.50) = 15.62
+Truncation Error = 0.23
+
