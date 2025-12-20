@@ -12,6 +12,10 @@ int main() {
         return 1;
     }
 
+    int casing;
+    in>>casing;
+
+    while(casing--){
     int n;
     in >> n;
 
@@ -85,11 +89,15 @@ int main() {
 
     if (rankA < rankAug) {
         out << "→ No Solution (Inconsistent System)\n";
-        return 0;
+        cout<<"\n";
+        cout<<"\n";
+        continue;
     }
     else if (rankA < n) {
         out << "→ Infinite Solutions (Dependent System)\n";
-        return 0;
+        cout<<"\n";
+        cout<<"\n";
+        continue;
     }
     else {
         out << "→ Unique Solution Exists\n\n";
@@ -129,6 +137,9 @@ int main() {
     out << "Solution:\n";
     for (int i = 0; i < n; i++) {
         out << "x" << i + 1 << " = " << a[i][n] << "\n";
+    }
+    cout<<endl;
+    cout<<endl;
     }
 
     return 0;

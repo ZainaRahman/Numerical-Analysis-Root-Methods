@@ -1,3 +1,25 @@
+
+Case 1:
+Determinant = -1
+
+Inverse Matrix:
+4 3 -1 
+-2 -2 1 
+5 4 -1 
+
+Solution Vector:
+x1 = 2
+x2 = 3
+x3 = -1
+
+
+Case 2:
+Determinant = 0 → Infinite Solutions (Dependent System)
+
+Case 3:
+Determinant = 0 → No Solution (Inconsistent System)
+
+Case 4:
 Determinant = 65
 
 Inverse Matrix:
@@ -13,3 +35,4 @@ x2 = -1
 x3 = 2.26154
 x4 = -0.138462
 x5 = 1.18462
+

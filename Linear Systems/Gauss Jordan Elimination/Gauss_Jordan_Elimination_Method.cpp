@@ -12,10 +12,17 @@ int main() {
         return 1;
     }
 
+    int casing;
+    in >> casing;
+    int r=1;
+
+    while (casing--){
+    out << "----- Case " << r++ << " -----\n\n";
     int n;
     in >> n;
 
     vector<vector<float>> a(n, vector<float>(n + 1));
+    cout<<endl;
 
     // Reading augmented matrix
     for (int i = 0; i < n; i++) {
@@ -85,11 +92,11 @@ int main() {
 
     if (rankA < rankAug) {
         out << "→ No Solution (Inconsistent System)\n";
-        return 0;
+        continue;
     }
     else if (rankA < n) {
         out << "→ Infinite Solutions (Dependent System)\n";
-        return 0;
+        continue;
     }
     else {
         out << "→ Unique Solution Exists\n\n";
@@ -140,6 +147,7 @@ int main() {
     out << "Solution:\n";
     for (int i = 0; i < n; i++) {
         out << "x" << i + 1 << " = " << a[i][n] << "\n";
+    }
     }
 
     return 0;

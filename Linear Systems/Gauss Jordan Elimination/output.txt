@@ -1,3 +1,40 @@
+----- Case 1 -----
+
+Echelon Form (Upper Triangular):
+-3.0000 -1.0000 2.0000 -11.0000 
+0.0000 1.6667 0.6667 4.3333 
+0.0000 0.0000 0.2000 -0.2000 
+
+System Classification:
+→ Unique Solution Exists
+
+The Row Reduced Echelon Form:
+1.0000 0.0000 0.0000 2.0000 
+0.0000 1.0000 0.0000 3.0000 
+0.0000 0.0000 1.0000 -1.0000 
+
+Solution:
+x1 = 2.0000
+x2 = 3.0000
+x3 = -1.0000
+----- Case 2 -----
+
+Echelon Form (Upper Triangular):
+2.0000 2.0000 4.0000 
+0.0000 0.0000 0.0000 
+
+System Classification:
+→ Infinite Solutions (Dependent System)
+----- Case 3 -----
+
+Echelon Form (Upper Triangular):
+2.0000 2.0000 5.0000 
+0.0000 0.0000 -0.5000 
+
+System Classification:
+→ No Solution (Inconsistent System)
+----- Case 4 -----
+
 Echelon Form (Upper Triangular):
 3.0000 2.0000 4.0000 1.0000 -2.0000 20.0000 
 0.0000 2.3333 0.6667 -1.3333 1.6667 1.3333 

@@ -48,6 +48,12 @@ int main()
         return 1;
     }
 
+    int casing;
+    fin>> casing;
+    int r=1;
+    while(casing--){
+    fout<<endl;
+    fout<<"Case "<<r++<<":\n";
     int n;
     fin >> n;
 
@@ -70,22 +76,45 @@ int main()
 
     double detA = determinant(a, n);
 
-    if (detA == 0) {
-        bool noSol = false, infiniteSol = true;
-
-        for (int r = 1; r <= n; r++) {
+    if (fabs(detA) < 1e-9) {
+        // Row reduce to check rank by gauss jordan elimination
+        vector<vector<double>> tempAug = aug;
+        const double EPS = 1e-9;
+        
+        for (int i = 1; i <= n; i++) {
+            // Find pivot
+            int maxRow = i;
+            for (int k = i + 1; k <= n; k++) {
+                if (fabs(tempAug[k][i]) > fabs(tempAug[maxRow][i]))
+                    maxRow = k;
+            }
+            swap(tempAug[i], tempAug[maxRow]);
+            
+            if (fabs(tempAug[i][i]) < EPS) continue;
+            
+            // Eliminate below
+            for (int k = i + 1; k <= n; k++) {
+                double factor = tempAug[k][i] / tempAug[i][i];
+                for (int j = i; j <= n + 1; j++) {
+                    tempAug[k][j] -= factor * tempAug[i][j];
+                }
+            }
+        }
+        
+        // Check for inconsistency:  row with all zeros in A but non-zero in b
+        bool noSol = false;
+        for (int i = 1; i <= n; i++) {
             bool allZero = true;
-            for (int c = 1; c <= n; c++)
-                if (aug[r][c] != 0)
+            for (int j = 1; j <= n; j++) {
+                if (fabs(tempAug[i][j]) > EPS) {
                     allZero = false;
-
-            if (allZero && aug[r][n+1] != 0) {
+                    break;
+                }
+            }
+            if (allZero && fabs(tempAug[i][n+1]) > EPS) {
                 noSol = true;
-                infiniteSol = false;
                 break;
             }
-            if (!allZero)
-                infiniteSol = false;
         }
 
         if (noSol)
@@ -93,7 +122,7 @@ int main()
         else
             fout << "Determinant = 0 → Infinite Solutions (Dependent System)\n";
 
-        return 0;
+        continue;
     }
 
     fout << "Determinant = " << detA << "\n\n";
@@ -123,9 +152,12 @@ int main()
     fout << "\nSolution Vector:\n";
     for (int i = 1; i <= n; i++)
         fout << "x" << i << " = " << res[i][1] << "\n";
+    fout << "\n";
+}
 
     fin.close();
     fout.close();
+
 
     return 0;
 }

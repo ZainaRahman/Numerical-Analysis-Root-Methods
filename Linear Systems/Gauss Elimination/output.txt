@@ -1,4 +1,31 @@
 Echelon Form (Upper Triangular):
+3.0000 6.0000 1.0000 16.0000 
+0.0000 1.0000 1.6667 3.6667 
+0.0000 0.0000 2.3333 2.3333 
+
+System Classification:
+→ Unique Solution Exists
+
+Solution:
+x1 = 1.0000
+x2 = 2.0000
+x3 = 1.0000
+
+Echelon Form (Upper Triangular):
+2.0000 2.0000 4.0000 
+0.0000 0.0000 0.0000 
+
+System Classification:
+→ Infinite Solutions (Dependent System)
+
+Echelon Form (Upper Triangular):
+2.0000 2.0000 5.0000 
+0.0000 0.0000 -0.5000 
+
+System Classification:
+→ No Solution (Inconsistent System)
+
+Echelon Form (Upper Triangular):
 -3.0000 -1.0000 2.0000 -11.0000 
 0.0000 1.6667 0.6667 4.3333 
 0.0000 0.0000 0.2000 -0.2000 
