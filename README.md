@@ -127,10 +127,10 @@ To solve a system of linear algebraic equations by transforming it into an **upp
 #### Data Requirement
 A system of `n` linear equations:
 ```
-a11x1 + a12x2 + ... + a1nxn = b1
-a21x1 + a22x2 + ... + a2nxn = b2
+a₁₁x₁ + a₁₂x₂ + ... + a₁ₙxₙ = b₁
+a₂₁x₁ + a₂₂x₂ + ... + a₂ₙxₙ = b₂
 ...
-an1x1 + an2x2 + ... + annxn = bn
+aₙ₁x₁ + aₙ₂x₂ + ... + aₙₙxₙ = bₙ
 ```
 
 Matrix form:
@@ -139,17 +139,17 @@ AX = B
 ```
 
 #### Notation
-- `A = [aij]` : coefficient matrix of order `n × n`
-- `X = [x1, x2, ..., xn]ᵀ` : vector of unknowns
-- `B = [b1, b2, ..., bn]ᵀ` : constant vector
+- `A = [aᵢⱼ]` : coefficient matrix of order `n × n`
+- `X = [x₁, x₂, ..., xₙ]ᵀ` : vector of unknowns
+- `B = [b₁, b₂, ..., bₙ]ᵀ` : constant vector
 
 #### Core Idea
 The system is simplified by eliminating variables using **elementary row operations** to obtain an upper triangular matrix.
 
 #### Elimination Approach (Formula)
-To eliminate element `aij` (where `j < i`):
+To eliminate element `aᵢⱼ` (where `j < i`):
 ```
-Ri ← Ri − (aij / ajj) Rj
+Rᵢ ← Rᵢ − (aᵢⱼ / aⱼⱼ) Rⱼ
 ```
 
 
@@ -161,8 +161,8 @@ Transforms the augmented matrix `[A | B]` into an **upper triangular form**.
 ##### Back Substitution
 Solutions are obtained using:
 ```
-xn = bn / ann
-xi = (1 / aii) [ bi − Σ (aij xj) ], j = i+1 to n
+xₙ = bₙ / aₙₙ
+xᵢ = (1 / aᵢᵢ) [ bᵢ − Σ (aᵢⱼ xⱼ) ], j = i+1 to n
 ```
 
 #### Accuracy Considerations
@@ -359,8 +359,8 @@ Augmented matrix form:
 ```
 
 #### Notation
-- `aij` : element of coefficient matrix
-- `bi`  : element of constant vector
+- `aᵢⱼ` : element of coefficient matrix
+- `bᵢ`  : element of constant vector
 
 #### Core Idea
 Each pivot element is made **unity**, and all other elements in its column are eliminated, producing an identity matrix.
@@ -369,12 +369,12 @@ Each pivot element is made **unity**, and all other elements in its column are e
 
 **Normalization of pivot row:**
 ```
-Ri ← Ri / aii
+Rᵢ ← Rᵢ / aᵢᵢ
 ```
 
 **Elimination of other rows:**
 ```
-Rj ← Rj − aji Ri (j ≠ i)
+Rⱼ ← Rⱼ − aⱼᵢ Rᵢ (j ≠ i)
 ```
 #### Matrix Form Obtained
 ```
@@ -386,7 +386,7 @@ where `I` is the identity matrix and `X` contains the solution.
 #### Evaluation Process
 The solution is obtained directly as:
 ```
-xi = bi
+xᵢ = bᵢ
 ```
 #### Accuracy Considerations
 - More computationally expensive than Gauss Elimination
@@ -588,8 +588,8 @@ A = LU
 ```
 
 #### Notation
-- `L = [lij]` : lower triangular matrix
-- `U = [uij]` : upper triangular matrix
+- `L = [lᵢⱼ]` : lower triangular matrix
+- `U = [uᵢⱼ]` : upper triangular matrix
 - `A` : coefficient matrix
 - `X` : solution vector
 - `B` : constant vector
@@ -602,7 +602,7 @@ LY = B
 ```
 using forward substitution:
 ```
-yi = bi − Σ (lij yj), j = 1 to i−1
+yᵢ = bᵢ − Σ (lᵢⱼ yⱼ), j = 1 to i−1
 ```
 
 **Step 2:** Solve
@@ -611,7 +611,7 @@ UX = Y
 ```
 using back substitution:
 ```
-xi = (1 / uii) [ yi − Σ (uij xj) ], j = i+1 to n
+xᵢ = (1 / uᵢᵢ) [ yᵢ − Σ (uᵢⱼ xⱼ) ], j = i+1 to n
 ```
 
 #### Accuracy Considerations
@@ -1032,12 +1032,14 @@ To find a root of a nonlinear algebraic equation.
 #### Data Requirement
 A polynomial equation of `n` degree:
 
-  - a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> + … + a<sub>2</sub>x<sup>2</sup> + a<sub>1</sub>x + a<sub>0</sub> = 0
+  - aₙxⁿ + aₙ₋₁xⁿ⁻¹ + … + a₂x² + a₁x + a₀ = 0
 
 #### Core Idea
 It repeatedly bisects an interval and then selects a subinterval in which a root must lie. Always converges if f(a) · f(b) < 0  
 **Formula:**
-$$x_{n+1} = \frac{a + b}{2}$$
+```
+xₙ₊₁ = (a + b) / 2
+```
 
 ### Bisection Code
 ```cpp
@@ -1116,13 +1118,15 @@ To solve nonlinear algebraic equation using a bracketing method based on linear 
 #### Data Requirement
 A polynomial equation of `n` degree:
 
-  - a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> + … + a<sub>2</sub>x<sup>2</sup> + a<sub>1</sub>x + a<sub>0</sub> = 0
+  - aₙxⁿ + aₙ₋₁xⁿ⁻¹ + … + a₂x² + a₁x + a₀ = 0
 
 #### Core Idea
 Uses linear interpolation between two points where the function has opposite signs. Draws a straight line connecting the function values at the endpoints and finds where it crosses the x-axis. More efficient than bisection method. 
 
 **Formula:**
-$$x_{n+1} = \frac{a \cdot f(b) - b \cdot f(a)}{f(b) - f(a)}$$
+```
+xₙ₊₁ = (a · f(b) - b · f(a)) / (f(b) - f(a))
+```
 
 ### False Position Code
 ```cpp
@@ -1208,12 +1212,14 @@ To solve nonlinear algebraic equation using an iterative method that approximate
 #### Data Requirement
 A polynomial equation of `n` degree:
 
-  - a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> + … + a<sub>2</sub>x<sup>2</sup> + a<sub>1</sub>x + a<sub>0</sub> = 0
+  - aₙxⁿ + aₙ₋₁xⁿ⁻¹ + … + a₂x² + a₁x + a₀ = 0
 
 #### Core Idea
 Uses two initial approximations and draws a secant line through them to find the next approximation. Does not require derivative computation unlike Newton-Raphson.  
 **Formula:**
-$$x_{n+1} = x_n - \frac{f(x_n)(x_n - x_{n-1})}{f(x_n) - f(x_{n-1})}$$
+```
+xₙ₊₁ = xₙ - (f(xₙ)(xₙ - xₙ₋₁)) / (f(xₙ) - f(xₙ₋₁))
+```
 
 #### Secant Code
 ```cpp
@@ -1285,13 +1291,15 @@ To solve nonlinear algebraic equation using tangent line approximation at each i
 #### Data Requirement
 A polynomial equation of `n` degree:
 
-  - a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> + … + a<sub>2</sub>x<sup>2</sup> + a<sub>1</sub>x + a<sub>0</sub> = 0
+  - aₙxⁿ + aₙ₋₁xⁿ⁻¹ + … + a₂x² + a₁x + a₀ = 0
 
 #### Core Idea
 Starts with an initial guess and uses the tangent line at that point to find a better approximation. Requires both function and its derivative. Converges quadratically when close to root.
 
 **Formula:**
-$$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$$
+```
+xₙ₊₁ = xₙ - f(xₙ) / f'(xₙ)
+```
 
 #### Newton Raphson Code
 ```cpp
@@ -2375,42 +2383,34 @@ y = 3 + 2x + 1x^2
 
 #### Objective
 To obtain a numerical solution of an initial value problem
-$$
-\frac{dy}{dx} = f(x, y), \quad y(x_0) = y_0
-$$
-by advancing the solution from x_n to x_{n+1} = x_n + h with high accuracy.
+```
+dy/dx = f(x, y),  y(x₀) = y₀
+```
+by advancing the solution from xₙ to xₙ₊₁ = xₙ + h with high accuracy.
 
 #### Notation
 
-- `x_n`: current point
-- `y_n`: current value  
+- `xₙ`: current point
+- `yₙ`: current value  
 - `h`: step size
-- `k_1, k_2, k_3, k_4`: slope estimates at different points
+- `k₁, k₂, k₃, k₄`: slope estimates at different points
 
 #### Basic Idea
 The 4th order Runge–Kutta method computes a weighted average of slopes:
-$$
-\begin{aligned}
-k_1 &= f(x_n, y_n),\\
-k_2 &= f\Big(x_n + \tfrac{h}{2}, y_n + \tfrac{h}{2} k_1\Big),\\
-k_3 &= f\Big(x_n + \tfrac{h}{2}, y_n + \tfrac{h}{2} k_2\Big),\\
-k_4 &= f(x_n + h, y_n + h k_3).
-\end{aligned}
-$$
+```
+k₁ = f(xₙ, yₙ)
+k₂ = f(xₙ + h/2, yₙ + (h/2)k₁)
+k₃ = f(xₙ + h/2, yₙ + (h/2)k₂)
+k₄ = f(xₙ + h, yₙ + hk₃)
+```
 Then the next value is
-$$
-y_{n+1} = y_n + \frac{h}{6} (k_1 + 2k_2 + 2k_3 + k_4).
-$$
+```
+yₙ₊₁ = yₙ + (h/6)(k₁ + 2k₂ + 2k₃ + k₄)
+```
 
 #### Features
-- Local truncation error of order
-    $$
-    O(h^5); \quad \text{global error} \ O(h^4)
-    $$
-- Does not require evaluation of higher derivatives of
-    $$
-    f
-    $$
+- Local truncation error of order O(h⁵); global error O(h⁴)
+- Does not require evaluation of higher derivatives of f
 - Widely used as a standard one-step method for ODEs.
 
 ### Runge Kutta Code
@@ -2510,97 +2510,65 @@ Computed solution: y(1) = 3.43656
 **Numerical Differentiation using Interpolation (Forward and Backward Differences)**
 
 #### Objective
-To approximate derivatives
-$$
-f'(x), f''(x), \ldots
-$$
-from tabulated values of
-$$
-f(x)
-$$
-when an explicit analytic form is not available.
+To approximate derivatives f'(x), f''(x), ... from tabulated values of f(x) when an explicit analytic form is not available.
 
 #### Data Requirement
-- Tabulated values (x_i, y_i) with equal spacing
-    $$
-    h = x_{i+1} - x_i
-    $$
+- Tabulated values (xᵢ, yᵢ) with equal spacing: h = xᵢ₊₁ - xᵢ
 
 #### Basic Idea
-1. Construct an interpolating polynomial for
-   $$
-   f(x)
-   $$
-   using either:
+1. Construct an interpolating polynomial for f(x) using either:
    - Newton's forward interpolation (when differentiating near the beginning of the table), or
    - Newton's backward interpolation (when differentiating near the end of the table).
 2. Differentiate the interpolating polynomial analytically and then evaluate the derivative at the required point.
 
-#### Example: First Derivative – Forward Formula at x_0
+#### Example: First Derivative – Forward Formula at x₀
 Using the Newton forward polynomial and differentiating, one obtains a formula of the form
-$$
-f'(x_0) \approx \frac{1}{h}\Big(a_1 \Delta y_0 + a_2 \Delta^2 y_0 + a_3 \Delta^3 y_0 + \cdots \Big),
-$$
-where \(\Delta^k y_0\) are forward differences and \(a_k\) are known constants depending on the chosen order of approximation.
+```
+f'(x₀) ≈ (1/h)(a₁Δy₀ + a₂Δ²y₀ + a₃Δ³y₀ + ⋯)
+```
+where Δᵏy₀ are forward differences and aₖ are known constants depending on the chosen order of approximation.
 
-#### Example: First Derivative – Backward Formula at x_n
+#### Example: First Derivative – Backward Formula at xₙ
 Similarly, using Newton's backward polynomial,
-$$
-f'(x_n) \approx \frac{1}{h}\Big(b_1 \nabla y_n + b_2 \nabla^2 y_n + b_3 \nabla^3 y_n + \cdots \Big),
-$$
-where \(\nabla^k y_n\) are backward differences and \(b_k\) are known constants.
+```
+f'(xₙ) ≈ (1/h)(b₁∇yₙ + b₂∇²yₙ + b₃∇³yₙ + ⋯)
+```
+where ∇ᵏyₙ are backward differences and bₖ are known constants.
 
 #### Second Derivative Approximation
 By differentiating the interpolating polynomial twice, we obtain formulas for the second derivative.
 
 - **At the beginning of the table (forward / using forward differences):**
-    $$
-    f''(x_0) \approx \frac{\Delta^2 y_0}{h^2}
-    = \frac{y_2 - 2y_1 + y_0}{h^2}.
-    $$
+    ```
+    f''(x₀) ≈ Δ²y₀/h² = (y₂ - 2y₁ + y₀)/h²
+    ```
 
 - **At the end of the table (backward / using backward differences):**
-    $$
-    f''(x_n) \approx \frac{\nabla^2 y_n}{h^2}
-    = \frac{y_n - 2y_{n-1} + y_{n-2}}{h^2}.
-    $$
+    ```
+    f''(xₙ) ≈ ∇²yₙ/h² = (yₙ - 2yₙ₋₁ + yₙ₋₂)/h²
+    ```
 
 Higher-order formulas (involving more difference terms) can be derived in the same way when greater accuracy is required.
 
 #### Interpolation Formulas Used
 For reference, the interpolation polynomials used in numerical differentiation are:
 
-- **Forward interpolation (around x_0):**
-    $$
-    f(x) \approx y_0 + u\,\Delta y_0 + \frac{u(u-1)}{2!}\,\Delta^2 y_0
-                        + \frac{u(u-1)(u-2)}{3!}\,\Delta^3 y_0 + \cdots,
-    $$
-    where
-    $$
-    u = \frac{x - x_0}{h}
-    $$
+- **Forward interpolation (around x₀):**
+    ```
+    f(x) ≈ y₀ + uΔy₀ + [u(u-1)/2!]Δ²y₀ + [u(u-1)(u-2)/3!]Δ³y₀ + ⋯
+    ```
+    where u = (x - x₀)/h
 
-- **Backward interpolation (around x_n):**
-    $$
-    f(x) \approx y_n + u\,\nabla y_n + \frac{u(u+1)}{2!}\,\nabla^2 y_n
-                        + \frac{u(u+1)(u+2)}{3!}\,\nabla^3 y_n + \cdots,
-    $$
-    where
-    $$
-    u = \frac{x - x_n}{h}
-    $$
+- **Backward interpolation (around xₙ):**
+    ```
+    f(x) ≈ yₙ + u∇yₙ + [u(u+1)/2!]∇²yₙ + [u(u+1)(u+2)/3!]∇³yₙ + ⋯
+    ```
+    where u = (x - xₙ)/h
 
 #### Features
 - Allows estimation of derivatives using only function values.
 - Different formulas (forward, backward, central) can be chosen based on where the point lies in the table and the desired accuracy.
-- Accuracy depends on the step size
-    $$
-    h
-    $$
-    and smoothness of
-    $$
-    f(x)
-    $$
+- Accuracy depends on the step size h and smoothness of f(x)
 
 ### Numerical Differentiation By Forward Interpolation Code
 ```cpp
@@ -2652,7 +2620,7 @@ To approximate the definite integral of a function using parabolic interpolation
 #### Data Requirement
 A polynomial equation of `n` degree:
 
-  - a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> + … + a<sub>2</sub>x<sup>2</sup> + a<sub>1</sub>x + a<sub>0</sub> = 0
+  - aₙxⁿ + aₙ₋₁xⁿ⁻¹ + … + a₂x² + a₁x + a₀ = 0
 
 Integration limits: `[a, b]` and number of subintervals `n` (must be even)
 
@@ -2662,8 +2630,11 @@ Integrate the parabola → to approximate the area
 
 Divides the interval into an even number of subintervals and fits parabolas through groups of three consecutive points. Once a parabola is fitted through three points, that parabola can be integrated exactly using basic calculus.
 **Formula:**
-$$\int_a^b f(x)dx \approx \frac{h}{3}[f(x_0) + 4\sum_{i=odd}f(x_i) + 2\sum_{i=even}f(x_i) + f(x_n)]$$
-where $h = \frac{b-a}{n}$
+```
+∫ₐᵇ f(x)dx ≈ (h/3)[f(x₀) + 4Σf(xᵢ) + 2Σf(xᵢ) + f(xₙ)]
+              (i=odd)    (i=even)
+```
+where h = (b-a)/n
 
 ### Simpson's One-Third Rule Code
 ```cpp
@@ -2745,15 +2716,18 @@ To approximate the definite integral of a function using cubic interpolation.
 #### Data Requirement
 A polynomial equation of `n` degree:
 
-  - a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> + … + a<sub>2</sub>x<sup>2</sup> + a<sub>1</sub>x + a<sub>0</sub> = 0
+  - aₙxⁿ + aₙ₋₁xⁿ⁻¹ + … + a₂x² + a₁x + a₀ = 0
 
 Integration limits: `[a, b]` and number of subintervals `n` (must be multiple of 3)
 
 #### Core Idea
 Divides the interval into subintervals (multiple of 3) and fits cubic polynomials through groups of four consecutive points. Provides higher accuracy for functions with higher-order derivatives.  
 **Formula:**
-$$\int_a^b f(x)dx \approx \frac{3h}{8}[f(x_0) + 3\sum_{i \neq 3k}f(x_i) + 2\sum_{i=3k}f(x_i) + f(x_n)]$$
-where $h = \frac{b-a}{n}$
+```
+∫ₐᵇ f(x)dx ≈ (3h/8)[f(x₀) + 3Σf(xᵢ) + 2Σf(xᵢ) + f(xₙ)]
+               (i≠3k)      (i=3k)
+```
+where h = (b-a)/n
 
 ### Simpson's Three-Eighths Rule Code
 ```cpp
