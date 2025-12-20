@@ -2508,7 +2508,7 @@ Computed solution: y(1) = 3.43656
 
 ### Numerical Differentiation By Forward Interpolation Method
 
-
+### Numerical Differentiation By Forward Interpolation Theory
 #### Method used
 **Numerical Differentiation using Forward Interpolation**
 
