@@ -1,5 +1,25 @@
 # Numerical-Analysis-Root-Methods
-# Table of Contents
+
+## Overview
+- Purpose: A curated set of classic numerical methods implemented in C++ with clear theory notes, sample inputs, and generated outputs.
+- What's inside: Linear systems (Gauss, Gauss–Jordan, LU, Matrix Inversion), nonlinear root finding (Bisection, False Position, Secant, Newton–Raphson), interpolation (Newton forward/backward/divided differences), numerical differentiation (forward/backward), numerical integration (Simpson’s 1/3 and 3/8 rules), ODE solving (Runge–Kutta 4th order), and curve fitting (linear, polynomial, transcendental).
+- How to run: Each method folder contains an `input.txt` and writes to `output.txt`. Build the corresponding C++ file (e.g., with MinGW g++ or Code::Blocks) and run in the same directory.
+- Requirements: A C++ compiler (e.g., g++/MinGW) and standard library; no external dependencies.
+
+## Methods at a Glance
+
+| Domain | Methods | When to use | Input/Notes |
+|---|---|---|---|
+| Linear Systems | Gauss Elimination, Gauss–Jordan, LU, Matrix Inversion | Solve AX = B; LU best for repeated solves with same A; Gauss–Jordan for inverse/RREF | Augmented matrix in input.txt; writes echelon/solution to output.txt |
+| Nonlinear Roots (Bracketing) | Bisection, False Position | f(a)·f(b) < 0; guaranteed convergence; robust but slower | Polynomial coefficients and interval [a, b] |
+| Nonlinear Roots (Open) | Secant, Newton–Raphson | Faster; need good initial guess(es); Newton needs derivative; may fail if poorly seeded | Coefficients and initial guess(es) |
+| Interpolation | Newton Forward, Newton Backward, Divided Difference | Estimate y at intermediate x; forward/backward for equally spaced ends; divided difference for uneven spacing | Tabulated (x, y) pairs |
+| Numerical Differentiation | Forward/Backward (from interpolation) | Approximate f'(x), f''(x) from tables; requires step size h | Equally spaced data; uses Δ/∇ tables |
+| Numerical Integration | Simpson’s 1/3, Simpson’s 3/8 | Definite integrals; 1/3: n even; 3/8: n multiple of 3 | Polynomial + [a, b], n subintervals |
+| ODE (Initial Value Problem) | Runge–Kutta (RK4) | y' = f(x, y) with step h; good accuracy per step | x0, y0, h, target xn |
+| Curve Fitting | Least Squares (Linear, Polynomial, Transcendental) | Fit models to data; transform when needed (log/ln) | (x, y) data pairs |
+
+## Table of Contents
 
 - [Solution of Linear Equations](#solution-of-linear-equations)
   - [Gauss Elimination Method](#gauss-elimination-method)
@@ -116,7 +136,7 @@
 
 ### Gauss Elimination Method
 
-### Gauss Elimination Theory
+#### Gauss Elimination Theory
 
 #### Method used
 **Gauss Elimination Method**
@@ -176,7 +196,7 @@ xᵢ = (1 / aᵢᵢ) [ bᵢ − Σ (aᵢⱼ xⱼ) ], j = i+1 to n
 
 
 
-### Gauss Elimination Code
+#### Gauss Elimination Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -316,7 +336,7 @@ int main() {
 
 ```
 
-### Gauss Elimination Input
+#### Gauss Elimination Input
 ```
 3
 2 1 -1 8
@@ -324,7 +344,7 @@ int main() {
 -2 1 2 -3
 ```
 
-### Gauss Elimination Output
+#### Gauss Elimination Output
 ```
 Echelon Form (Upper Triangular):
 -3.0000 -1.0000 2.0000 -11.0000 
@@ -345,7 +365,7 @@ x3 = -1.0000
 
 ### Gauss Jordan Elimination Method
 
-### Gauss Jordan Theory
+#### Gauss Jordan Theory
 #### Method used
 **Gauss–Jordan Elimination Method**
 
@@ -396,7 +416,7 @@ xᵢ = bᵢ
 - Used when a direct solution or matrix inverse is required
 
 
-### Gauss Jordan Code
+#### Gauss Jordan Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -537,7 +557,7 @@ int main() {
 
 ```
 
-### Gauss Jordan Input
+#### Gauss Jordan Input
 ```
 5
 2 1 -1 3 2 9
@@ -547,7 +567,7 @@ int main() {
 1 -1 2 3 4 15
 ```
 
-### Gauss Jordan Output
+#### Gauss Jordan Output
 ```
 Echelon Form (Upper Triangular):
 3.0000 2.0000 4.0000 1.0000 -2.0000 20.0000 
@@ -572,7 +592,7 @@ x5 = 1.1846
 
 ### LU Decomposition Method
 
-### LU Decomposition Theory
+#### LU Decomposition Theory
 #### Method used
 **LU Decomposition Method**
 
@@ -622,7 +642,7 @@ xᵢ = (1 / uᵢᵢ) [ yᵢ − Σ (uᵢⱼ xⱼ) ], j = i+1 to n
 - Ideal for solving multiple systems with the same coefficient matrix
 
 
-### LU Decomposition Code
+#### LU Decomposition Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -769,7 +789,7 @@ int main() {
 
 ```
 
-### LU Decomposition Input
+#### LU Decomposition Input
 ```
 5
 2 1 -1 3 2 9
@@ -779,7 +799,7 @@ int main() {
 1 -1 2 3 4 15
 ```
 
-### LU Decomposition Output
+#### LU Decomposition Output
 ```
 U Matrix:
 2 1 -1 3 2 
@@ -810,7 +830,7 @@ x5 = 1.18462
 
 ### Matrix Inversion
 
-### Matrix Inversion Theory
+#### Matrix Inversion Theory
 
 #### Method used
 **Matrix Inversion Method**
@@ -853,7 +873,7 @@ Once `A⁻¹` is obtained, the solution vector is computed using matrix multipli
 - Suitable for small systems only
 
 
-### Matrix Inversion Code
+#### Matrix Inversion Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -989,7 +1009,7 @@ int main()
 
 ```
 
-### Matrix Inversion Input
+#### Matrix Inversion Input
 ```
 5
 2 1 -1 3 2 9
@@ -999,7 +1019,7 @@ int main()
 1 -1 2 3 4 15
 ```
 
-### Matrix Inversion Output
+#### Matrix Inversion Output
 ```
 Determinant = 65
 
@@ -1025,7 +1045,7 @@ x5 = 1.18462
 
 ### Bisection Method
 
-### Bisection Theory
+#### Bisection Theory
 #### Objective
 To find a root of a nonlinear algebraic equation.
 
@@ -1041,7 +1061,7 @@ It repeatedly bisects an interval and then selects a subinterval in which a root
 xₙ₊₁ = (a + b) / 2
 ```
 
-### Bisection Code
+#### Bisection Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -1093,14 +1113,14 @@ int main() {
 }
 ```
 
-### Bisection Input
+#### Bisection Input
 ```
 3
 1 0 -4 -9
 0 5 .0001 30
 ```
 
-### Bisection Output
+#### Bisection Output
 ```
 Equation: 1*x^3 + 0*x^2 + -4*x^1 + -9*x^0
 Bisection Root = 2.70653
@@ -1111,7 +1131,7 @@ Iterations = 16
 
 ### False Position Method
 
-### False Position Theory
+#### False Position Theory
 #### Objective
 To solve nonlinear algebraic equation using a bracketing method based on linear interpolation.
 
@@ -1128,7 +1148,7 @@ Uses linear interpolation between two points where the function has opposite sig
 xₙ₊₁ = (a · f(b) - b · f(a)) / (f(b) - f(a))
 ```
 
-### False Position Code
+#### False Position Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -1187,14 +1207,14 @@ int main() {
 }
 ```
 
-### False Position Input
+#### False Position Input
 ```
 3
 1 0 -4 -9
 0 5 .0001 30
 ```
 
-### False Position Output
+#### False Position Output
 ```
 Equation: 1*x^3 + 0*x^2 + -4*x^1 + -9*x^0
 False Position Root = 2.70642
@@ -1372,11 +1392,11 @@ Iterations = 2
 ```
 #### [Back to Contents](#table-of-contents)
 ---
-### Solution of Interpolation
+## Solution of Interpolation
 
 ### Newton's Forward Interpolation Method
 
-### Newton's Forward Interpolation Theory
+#### Newton's Forward Interpolation Theory
 #### Method used
 Newton's Forward Difference Interpolation
 
@@ -1413,7 +1433,7 @@ h = step size (x₁ − x₀)
 - Requires equally spaced x values.
 
 
-### Newton's Forward Interpolation Code
+#### Newton's Forward Interpolation Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -1560,7 +1580,7 @@ for (int i = 0; i < n; i++)
 
 ```
 
-### Newton's Forward Interpolation Input
+#### Newton's Forward Interpolation Input
 ```
 2
 5
@@ -1574,7 +1594,7 @@ for (int i = 0; i < n; i++)
 
 ```
 
-### Newton's Forward Interpolation Output
+#### Newton's Forward Interpolation Output
 ```
 Test Case 1
 Forward Difference Table:
@@ -1610,7 +1630,7 @@ Estimated Forward Interpolation Error = 0.00
 
 ### Newton's Backward Interpolation Method
 
-### Newton's Backward Interpolation Theory
+#### Newton's Backward Interpolation Theory
 #### Method used
 Newton's Backward Difference Interpolation
 
@@ -1648,7 +1668,7 @@ h = step size (x₁ − x₀)
 - Particularly useful when new data points are appended at the end.
 
 
-### Newton's Backward Interpolation Code
+#### Newton's Backward Interpolation Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -1777,7 +1797,7 @@ int main()
 
 ```
 
-### Newton's Backward Interpolation Input
+#### Newton's Backward Interpolation Input
 ```
 1
 7
@@ -1787,7 +1807,7 @@ int main()
 
 ```
 
-### Newton's Backward Interpolation Output
+#### Newton's Backward Interpolation Output
 ```
 Test Case 1
 Backward Difference Table:
@@ -1811,7 +1831,7 @@ Estimated Backward Interpolation Error = 0.00
 
 ### Divided Difference Method
 
-### Divided Difference Theory
+#### Divided Difference Theory
 #### Method used
 Newton's Divided Difference Interpolation
 
@@ -1847,7 +1867,7 @@ Pₙ(x) = f[x₀]
 - Coefficients can be updated easily when new data points are added.
 - Numerically stable when nodes are distinct and well separated.
 
-### Divided Difference Code
+#### Divided Difference Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -1935,7 +1955,7 @@ int main()
 
 ```
 
-### Divided Difference Input
+#### Divided Difference Input
 ```
 1
 4
@@ -1947,7 +1967,7 @@ int main()
 
 ```
 
-### Divided Difference Output
+#### Divided Difference Output
 ```
 Test Case 1
 Interpolated value f(2.50) = 15.62
@@ -1961,7 +1981,7 @@ Truncation Error = 0.23
 
 ### Least Square Regression Method For Linear Equations Method
 
-### Least Square Regression Method For Linear Equations Theory
+#### Least Square Regression Method For Linear Equations Theory
 #### Method used
 **Least Squares Regression – Linear Equation**
 
@@ -2008,7 +2028,7 @@ The two normal equations are solved simultaneously to determine constants `a` an
 - Widely used for trend analysis
 - Useful when data follows an approximately linear pattern
 
-### Least Square Regression Method For Linear Equations Code
+#### Least Square Regression Method For Linear Equations Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -2055,7 +2075,7 @@ int main() {
 
 ```
 
-### Least Square Regression Method For Linear Equations Input
+#### Least Square Regression Method For Linear Equations Input
 ```
 5
 1 50
@@ -2065,7 +2085,7 @@ int main() {
 5 45
 ```
 
-### Least Square Regression Method For Linear Equations Output
+#### Least Square Regression Method For Linear Equations Output
 ```
 Linear Fit Equation:
 y = 69.2 + 3x
@@ -2076,7 +2096,7 @@ y = 69.2 + 3x
 
 ### Least Square Regression Method For Transcendental Equations 
 
-### Least Square Regression Method For Transcendental Equations Theory
+#### Least Square Regression Method For Transcendental Equations Theory
 #### Method used
 **Least Squares Regression – Transcendental Equation**
 
@@ -2140,7 +2160,7 @@ Y = A + bX
 - Suitable for nonlinear experimental data
 
 
-### Least Square Regression Method For Transcendental Equations Code
+#### Least Square Regression Method For Transcendental Equations Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -2193,7 +2213,7 @@ int main() {
 
 ```
 
-### Least Square Regression Method For Transcendental Equations Input
+#### Least Square Regression Method For Transcendental Equations Input
 ```
 5
 1 50
@@ -2203,7 +2223,7 @@ int main() {
 5 45
 ```
 
-### Least Square Regression Method For Transcendental Equations Output
+#### Least Square Regression Method For Transcendental Equations Output
 ```
 Transcendental (Exponential) Fit:
 y = 68.8608 * e^(0.0194744x)
@@ -2214,7 +2234,7 @@ y = 68.8608 * e^(0.0194744x)
 
 ### Least Square Regression Method For Polynomial Equations 
 
-### Least Square Regression Method For Polynomial Equations Theory
+#### Least Square Regression Method For Polynomial Equations Theory
 #### Method used
 **Least Squares Regression – Polynomial Equation**
 
@@ -2256,7 +2276,7 @@ For a second-degree polynomial:
 - Used when data shows curvature
 - Suitable for engineering and experimental modeling
 
-### Least Square Regression Method For Polynomial Equations Code
+#### Least Square Regression Method For Polynomial Equations Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -2365,7 +2385,7 @@ int main() {
 
 ```
 
-### Least Square Regression Method For Polynomial Equations Input
+#### Least Square Regression Method For Polynomial Equations Input
 ```
 5
 1 6 
@@ -2375,7 +2395,7 @@ int main() {
 5 38
 ```
 
-### Least Square Regression Method For Polynomial Equations Output
+#### Least Square Regression Method For Polynomial Equations Output
 ```
 Quadratic Polynomial Fit:
 y = 3 + 2x + 1x^2
@@ -2384,13 +2404,13 @@ y = 3 + 2x + 1x^2
 #### [Back to Contents](#table-of-contents)
 ---
 
-### Solution of Differential Equations
+## Solution of Differential Equations
 
 
 
 ### Runge Kutta Method 
 
-### Runge Kutta Theory
+#### Runge Kutta Theory
 #### Method used
 **Runge–Kutta Method (Classical 4th Order RK)**
 
@@ -2427,7 +2447,7 @@ Update to next step:
 - Does not require evaluation of higher derivatives
 - Widely used as a standard one-step method for ODEs.
 
-### Runge Kutta Code
+#### Runge Kutta Code
 ```cpp
 #include <iostream>
 #include <fstream>
@@ -2497,13 +2517,13 @@ int main()
 
 ```
 
-### Runge Kutta Input
+#### Runge Kutta Input
 ```
 0 1 0.1 1
 
 ```
 
-### Runge Kutta Output
+#### Runge Kutta Output
 ```
 Runge-Kutta 4th Order Method
 ----------------------------
@@ -2519,7 +2539,7 @@ Computed solution: y(1) = 3.43656
 
 ### Numerical Differentiation By Forward Interpolation Method
 
-### Numerical Differentiation By Forward Interpolation Theory
+#### Numerical Differentiation By Forward Interpolation Theory
 #### Method used
 **Numerical Differentiation using Forward Interpolation**
 
@@ -2569,7 +2589,7 @@ For reference, the interpolation polynomials used in numerical differentiation a
 - Allows estimation of derivatives using only function values.
 - Accuracy depends on the step size h and smoothness of f(x)
 
-### Numerical Differentiation By Forward Interpolation Code
+#### Numerical Differentiation By Forward Interpolation Code
 ```cpp
 #include<bits/stdc++.h>
 using namespace std;
@@ -2705,7 +2725,7 @@ int main()
 
 ```
 
-### Numerical Differentiation By Forward Interpolation Input
+#### Numerical Differentiation By Forward Interpolation Input
 ```
 1
 6
@@ -2714,7 +2734,7 @@ int main()
 
 ```
 
-### Numerical Differentiation By Forward Interpolation Output
+#### Numerical Differentiation By Forward Interpolation Output
 ```
 Total Test Cases: 1
 
@@ -2732,7 +2752,7 @@ Error in g''(x)  = 0.092775%
 
 ### Numerical Differentiation By Backward Interpolation Method
 
-### Numerical Differentiation By Backward Interpolation Theory
+#### Numerical Differentiation By Backward Interpolation Theory
 #### Method used
 Numerical Differentiation using Backward Interpolation
 
@@ -2776,7 +2796,7 @@ where u = (x − xₙ)/h
 - Accuracy depends on step size h and the smoothness of the underlying function.
 
 
-### Numerical Differentiation By Backward Interpolation Code
+#### Numerical Differentiation By Backward Interpolation Code
 ```cpp
 #include<bits/stdc++.h>
 using namespace std;
@@ -2912,7 +2932,7 @@ int main()
 
 ```
 
-### Numerical Differentiation By Backward Interpolation Input
+#### Numerical Differentiation By Backward Interpolation Input
 ```
 1
 6
@@ -2921,7 +2941,7 @@ int main()
 
 ```
 
-### Numerical Differentiation By Backward Interpolation Output
+#### Numerical Differentiation By Backward Interpolation Output
 ```
 Total Test Cases: 1
 
@@ -2941,7 +2961,7 @@ Error in f''(x)  = 1.580300%
 
 ### Simpson's One-Third Rule
 
-### Simpson's One-Third Rule Theory
+#### Simpson's One-Third Rule Theory
 #### Objective
 To approximate the definite integral of a function using parabolic interpolation.
 
@@ -2964,7 +2984,7 @@ Divides the interval into an even number of subintervals and fits parabolas thro
 ```
 where h = (b-a)/n
 
-### Simpson's One-Third Rule Code
+#### Simpson's One-Third Rule Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -3020,14 +3040,14 @@ int main() {
 }
 ```
 
-### Simpson's One-Third Rule Input
+#### Simpson's One-Third Rule Input
 ```
 3
 1 2 0 1
 0 1 6
 ```
 
-### Simpson's One-Third Rule Output
+#### Simpson's One-Third Rule Output
 ```
 Equation: 1*x^3 + 2*x^2 + 0*x^1 + 1*x^0
 Simpson 1/3 Rule Result = 1.91667
@@ -3037,7 +3057,7 @@ Simpson 1/3 Rule Result = 1.91667
 
 ### Simpson's Three-Eighths Rule 
 
-### Simpson's Three-Eighths Rule Theory
+#### Simpson's Three-Eighths Rule Theory
 #### Objective
 To approximate the definite integral of a function using cubic interpolation.
 
@@ -3057,7 +3077,7 @@ Divides the interval into subintervals (multiple of 3) and fits cubic polynomial
 ```
 where h = (b-a)/n
 
-### Simpson's Three-Eighths Rule Code
+#### Simpson's Three-Eighths Rule Code
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -3113,14 +3133,14 @@ int main() {
 }
 ```
 
-### Simpson's Three-Eighths Rule Input
+#### Simpson's Three-Eighths Rule Input
 ```
 4
 1 0 0 1 1
 0 3 6
 ```
 
-### Simpson's Three-Eighths Rule Output
+#### Simpson's Three-Eighths Rule Output
 ```
 Equation: 1*x^4 + 0*x^3 + 0*x^2 + 1*x^1 + 1*x^0
 Simpson 3/8 Rule Result = 56.1562
