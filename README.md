@@ -105,6 +105,8 @@
     - [Code](#runge-kutta-code)
     - [Input](#runge-kutta-input)
     - [Output](#runge-kutta-output)
+
+- [Numerical Differentiation](#numerical-differentiation)
   - [Numerical Differentiation by Forward Interpolation Method](#numerical-differentiation-by-forward-interpolation-method)
     - [Theory](#numerical-differentiation-by-forward-interpolation-theory)
     - [Code](#numerical-differentiation-by-forward-interpolation-code)
@@ -2406,8 +2408,6 @@ y = 3 + 2x + 1x^2
 
 ## Solution of Differential Equations
 
-
-
 ### Runge Kutta Method 
 
 #### Runge Kutta Theory
@@ -2536,6 +2536,8 @@ Computed solution: y(1) = 3.43656
 ```
 #### [Back to Contents](#table-of-contents)
 ---
+
+## Numerical Differentiation
 
 ### Numerical Differentiation By Forward Interpolation Method
 
