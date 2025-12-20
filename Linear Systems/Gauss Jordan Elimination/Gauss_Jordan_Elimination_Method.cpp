@@ -126,6 +126,16 @@ int main() {
         }
     }
 
+     // Printing Row Reduced Echelon Form
+    out << "The Row Reduced Echelon Form:\n";
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j <= n; j++)
+            out << fixed << setprecision(4) << a[i][j] << " ";
+        out << "\n";
+    }
+    out << "\n";
+
+
     //Output Solution
     out << "Solution:\n";
     for (int i = 0; i < n; i++) {

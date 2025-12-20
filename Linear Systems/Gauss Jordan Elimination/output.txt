@@ -8,6 +8,13 @@ Echelon Form (Upper Triangular):
 System Classification:
 → Unique Solution Exists
 
+The Row Reduced Echelon Form:
+1.0000 0.0000 0.0000 0.0000 0.0000 5.1538 
+0.0000 1.0000 0.0000 0.0000 0.0000 -1.0000 
+0.0000 0.0000 1.0000 0.0000 0.0000 2.2615 
+0.0000 0.0000 0.0000 1.0000 0.0000 -0.1385 
+-0.0000 -0.0000 -0.0000 -0.0000 1.0000 1.1846 
+
 Solution:
 x1 = 5.1538
 x2 = -1.0000
