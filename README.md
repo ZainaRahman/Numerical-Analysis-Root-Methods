@@ -548,6 +548,16 @@ int main() {
         }
     }
 
+     // Printing Row Reduced Echelon Form
+    out << "The Row Reduced Echelon Form:\n";
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j <= n; j++)
+            out << fixed << setprecision(4) << a[i][j] << " ";
+        out << "\n";
+    }
+    out << "\n";
+
+
     //Output Solution
     out << "Solution:\n";
     for (int i = 0; i < n; i++) {
@@ -556,6 +566,7 @@ int main() {
 
     return 0;
 }
+
 
 ```
 
@@ -580,6 +591,13 @@ Echelon Form (Upper Triangular):
 
 System Classification:
 → Unique Solution Exists
+
+The Row Reduced Echelon Form:
+1.0000 0.0000 0.0000 0.0000 0.0000 5.1538 
+0.0000 1.0000 0.0000 0.0000 0.0000 -1.0000 
+0.0000 0.0000 1.0000 0.0000 0.0000 2.2615 
+0.0000 0.0000 0.0000 1.0000 0.0000 -0.1385 
+-0.0000 -0.0000 -0.0000 -0.0000 1.0000 1.1846 
 
 Solution:
 x1 = 5.1538
@@ -835,44 +853,55 @@ x5 = 1.18462
 #### Matrix Inversion Theory
 
 #### Method used
-**Matrix Inversion Method**
+Cofactor/Adjugate-based inverse with recursive determinant.
 
 #### Objective
-To solve a system of linear equations using the inverse of the coefficient matrix.
+Solve `AX = B` via `X = A⁻¹B` when `det(A) ≠ 0`; classify singular cases when det(A) = 0.
 
 #### Data Requirement
-A square, non-singular matrix (`det(A) ≠ 0`).
+Square matrix A. If `det(A) = 0`, the system may be inconsistent (no solution) or dependent (infinitely many); classification uses the augmented matrix.
 
 #### Core Idea (Formula)
-Given:
 ```
 AX = B
 ```
-The solution is:
 ```
-X = A⁻¹ B
+X = A⁻¹ B (if det(A) ≠ 0)
 ```
+
 #### Notation
-- `A⁻¹` : inverse of matrix `A`
-- `I` : identity matrix
+- `A⁻¹`: inverse of A
+- `adj(A)`: adjugate of A
+- `Cᵀ`: transpose of cofactor matrix C
 
 #### Inversion Approach
-The inverse is computed using Gauss–Jordan elimination:
+- Compute det(A) using cofactors.
+- If det(A) = 0:
+    - If a row of A is all zeros but the corresponding B entry is nonzero → No solution (inconsistent).
+    - If rows of A are dependent and B is compatible → Infinite solutions (dependent).
+    - Stop.
+- Build cofactor matrix C with:
 ```
-[A | I] → [I | A⁻¹]
+Cᵢⱼ = (−1)^(i+j) · det(Mᵢⱼ)
+```
+- Form adjugate and inverse:
+```
+adj(A) = Cᵀ
+A⁻¹ = adj(A) / det(A)
 ```
 
 #### Evaluation Process
-Once `A⁻¹` is obtained, the solution vector is computed using matrix multiplication.
+Multiply A⁻¹ by B to obtain the solution vector X.
+```
+X = A⁻¹ B
+```
 
 #### Accuracy Considerations
-- Computationally expensive
-- Sensitive to rounding errors
-- Not recommended for large systems
+- Recursive determinant and cofactors are computationally expensive and numerically sensitive.
+- Prefer elimination methods for large systems; this approach is illustrative and aligns with the provided code.
 
 #### Applicability
-- Useful for theoretical analysis
-- Suitable for small systems only
+- Good for educational purposes and small systems where clarity of the inverse construction is desired.
 
 
 #### Matrix Inversion Code
