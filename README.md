@@ -19,6 +19,98 @@
 | ODE (Initial Value Problem) | Runge–Kutta (RK4) | y' = f(x, y) with step h; good accuracy per step | x0, y0, h, target xn |
 | Curve Fitting | Least Squares (Linear, Polynomial, Transcendental) | Fit models to data; transform when needed (log/ln) | (x, y) data pairs |
 
+## Project Structure
+
+```
+Numerical-Analysis-Root-Methods/
+├── README.md
+├── Linear Systems/
+│   ├── Gauss Elimination/
+│   │   ├── Gauss_Elimination_Method.cpp
+│   │   ├── input.txt
+│   │   └── output.txt
+│   ├── Gauss Jordan Elimination/
+│   │   ├── Gauss_Jordan_Elimination_Method.cpp
+│   │   ├── input.txt
+│   │   └── output.txt
+│   ├── LU Factorization/
+│   │   ├── LU_Factorization_Method.cpp
+│   │   ├── input.txt
+│   │   └── output.txt
+│   └── Matrix Inversion/
+│       ├── Matrix_Inversion_Method.cpp
+│       ├── input.txt
+│       └── output.txt
+├── Nonlinear System/
+│   ├── Bisection/
+│   │   ├── main.cpp
+│   │   ├── input.txt
+│   │   └── output.txt
+│   ├── FalsePosition/
+│   │   ├── main.cpp
+│   │   ├── input.txt
+│   │   └── output.txt
+│   ├── Secant/
+│   │   ├── main.cpp
+│   │   ├── input.txt
+│   │   └── output.txt
+│   └── NewtonRaphson/
+│       ├── main.cpp
+│       ├── input.txt
+│       └── output.txt
+├── Newton's Forward Interpolation/
+│   ├── main.cpp
+│   ├── input.txt
+│   ├── Output.txt
+│   └── Newton's Forward Interpolation.cbp
+├── Newton backward Interpolation/
+│   ├── main.cpp
+│   ├── Input.txt
+│   ├── Output.txt
+│   └── Newton backward Interpolation.cbp
+├── Newton Divided Difference Interpoaltion/
+│   ├── Divided difference interpolation/
+│   │   ├── main.cpp
+│   │   ├── input.txt
+│   │   └── output.txt
+├── Differentiation (forward iterpolation)/
+│   ├── main.cpp
+│   ├── input.txt
+│   ├── output.txt
+│   └── Differentiation (forward iterpolation).cbp
+├── Differentiation (backward interpolation)/
+│   ├── main.cpp
+│   ├── input.txt
+│   ├── output.txt
+│   └── Differentiation using backward interpolation.cbp
+├── Integration/
+│   ├── Simpsons1_3rd/
+│   │   ├── main.cpp
+│   │   ├── input.txt
+│   │   └── output.txt
+│   └── Simpsons3_8th/
+│       ├── main.cpp
+│       ├── input.txt
+│       └── output.txt
+├── RK method/
+│   ├── main.cpp
+│   ├── input.txt
+│   └── output.txt
+└── Curve Fitting Methods/
+    ├── For Linear Equation/
+    │   ├── Linear_Equation.cpp
+    │   ├── input.txt
+    │   └── output.txt
+    ├── For Polynomial Equation/
+    │   ├── Polynomial_Equation.cpp
+    │   ├── input.txt
+    │   └── output.txt
+    └── For Transcendental Equation/
+        ├── Transcendental_Equation.cpp
+        ├── input.txt
+        └── output.txt
+```
+
 ## Table of Contents
 
 - [Solution of Linear Equations](#solution-of-linear-equations)
@@ -214,6 +306,10 @@ int main() {
         return 1;
     }
 
+    int casing;
+    in>>casing;
+
+    while(casing--){
     int n;
     in >> n;
 
@@ -287,11 +383,15 @@ int main() {
 
     if (rankA < rankAug) {
         out << "→ No Solution (Inconsistent System)\n";
-        return 0;
+        cout<<"\n";
+        cout<<"\n";
+        continue;
     }
     else if (rankA < n) {
         out << "→ Infinite Solutions (Dependent System)\n";
-        return 0;
+        cout<<"\n";
+        cout<<"\n";
+        continue;
     }
     else {
         out << "→ Unique Solution Exists\n\n";
@@ -332,22 +432,65 @@ int main() {
     for (int i = 0; i < n; i++) {
         out << "x" << i + 1 << " = " << a[i][n] << "\n";
     }
+    cout<<endl;
+    cout<<endl;
+    }
 
     return 0;
 }
+
 
 ```
 
 #### Gauss Elimination Input
 ```
+4
+3
+3 6 1 16
+2 4 3 13
+1 3 2 9
+2
+1 1 2
+2 2 4
+2
+1 1 2
+2 2 5
 3
 2 1 -1 8
 -3 -1 2 -11
 -2 1 2 -3
+
 ```
 
 #### Gauss Elimination Output
 ```
+Echelon Form (Upper Triangular):
+3.0000 6.0000 1.0000 16.0000 
+0.0000 1.0000 1.6667 3.6667 
+0.0000 0.0000 2.3333 2.3333 
+
+System Classification:
+→ Unique Solution Exists
+
+Solution:
+x1 = 1.0000
+x2 = 2.0000
+x3 = 1.0000
+
+Echelon Form (Upper Triangular):
+2.0000 2.0000 4.0000 
+0.0000 0.0000 0.0000 
+
+System Classification:
+→ Infinite Solutions (Dependent System)
+
+Echelon Form (Upper Triangular):
+2.0000 2.0000 5.0000 
+0.0000 0.0000 -0.5000 
+
+System Classification:
+→ No Solution (Inconsistent System)
+
 Echelon Form (Upper Triangular):
 -3.0000 -1.0000 2.0000 -11.0000 
 0.0000 1.6667 0.6667 4.3333 
@@ -360,6 +503,7 @@ Solution:
 x1 = 2.0000
 x2 = 3.0000
 x3 = -1.0000
+
 
 ```
 #### [Back to Contents](#table-of-contents)
@@ -434,10 +578,17 @@ int main() {
         return 1;
     }
 
+    int casing;
+    in >> casing;
+    int r=1;
+
+    while (casing--){
+    out << "----- Case " << r++ << " -----\n\n";
     int n;
     in >> n;
 
     vector<vector<float>> a(n, vector<float>(n + 1));
+    cout<<endl;
 
     // Reading augmented matrix
     for (int i = 0; i < n; i++) {
@@ -507,11 +658,11 @@ int main() {
 
     if (rankA < rankAug) {
         out << "→ No Solution (Inconsistent System)\n";
-        return 0;
+        continue;
     }
     else if (rankA < n) {
         out << "→ Infinite Solutions (Dependent System)\n";
-        return 0;
+        continue;
     }
     else {
         out << "→ Unique Solution Exists\n\n";
@@ -563,15 +714,28 @@ int main() {
     for (int i = 0; i < n; i++) {
         out << "x" << i + 1 << " = " << a[i][n] << "\n";
     }
+    }
 
     return 0;
 }
+
 
 
 ```
 
 #### Gauss Jordan Input
 ```
+4
+3
+2 1 -1 8
+-3 -1 2 -11
+-2 1 2 -3
+2
+1 1 2
+2 2 4
+2
+1 1 2
+2 2 5
 5
 2 1 -1 3 2 9
 1 3 2 -1 1 8
@@ -582,6 +746,46 @@ int main() {
 
 #### Gauss Jordan Output
 ```
+----- Case 1 -----
+
+Echelon Form (Upper Triangular):
+-3.0000 -1.0000 2.0000 -11.0000 
+0.0000 1.6667 0.6667 4.3333 
+0.0000 0.0000 0.2000 -0.2000 
+
+System Classification:
+→ Unique Solution Exists
+
+The Row Reduced Echelon Form:
+1.0000 0.0000 0.0000 2.0000 
+0.0000 1.0000 0.0000 3.0000 
+0.0000 0.0000 1.0000 -1.0000 
+
+Solution:
+x1 = 2.0000
+x2 = 3.0000
+x3 = -1.0000
+
+----- Case 2 -----
+
+Echelon Form (Upper Triangular):
+2.0000 2.0000 4.0000 
+0.0000 0.0000 0.0000 
+
+System Classification:
+→ Infinite Solutions (Dependent System)
+
+----- Case 3 -----
+
+Echelon Form (Upper Triangular):
+2.0000 2.0000 5.0000 
+0.0000 0.0000 -0.5000 
+
+System Classification:
+→ No Solution (Inconsistent System)
+
+----- Case 4 -----
+
 Echelon Form (Upper Triangular):
 3.0000 2.0000 4.0000 1.0000 -2.0000 20.0000 
 0.0000 2.3333 0.6667 -1.3333 1.6667 1.3333 
@@ -605,6 +809,7 @@ x2 = -1.0000
 x3 = 2.2615
 x4 = -0.1385
 x5 = 1.1846
+
 
 ```
 #### [Back to Contents](#table-of-contents)
@@ -667,150 +872,196 @@ xᵢ = (1 / uᵢᵢ) [ yᵢ − Σ (uᵢⱼ xⱼ) ], j = i+1 to n
 #include <bits/stdc++.h>
 using namespace std;
 
-int main() {
+int main()
+{
 
-    // File Handling 
+    // ---- File Handling ----
     ifstream in("input.txt");
     ofstream out("output.txt");
 
-    if (!in) {
+    if (!in)
+    {
         cerr << "Error: input.txt not found\n";
         return 1;
     }
 
-    int n;
-    in >> n;
+    int casing;
+    in >> casing;
+    int r = 1;
 
-    vector<vector<double>> a(n + 1, vector<double>(n + 2));
+    while (casing--)
+    {
+        cout << endl;
+        out << "----- Case " << r++ << " -----\n\n";
+        int n;
+        in >> n;
 
-    // Reading augmented matrix A|b
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n + 1; j++) {
-            in >> a[i][j];
-        }
-    }
+        vector<vector<double>> a(n + 1, vector<double>(n + 2));
 
-    vector<vector<double>> u(n + 1, vector<double>(n + 1, 0));
-    vector<vector<double>> l(n + 1, vector<double>(n + 1, 0));
-
-    for (int i = 1; i <= n; i++) {
-        l[i][i] = 1;
-    }
-
-    //  LU Decomposition
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-
-            if (i <= j) {
-                u[i][j] = a[i][j];
-                for (int k = 1; k < i; k++)
-                    u[i][j] -= l[i][k] * u[k][j];
+        // Read augmented matrix A|b
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = 1; j <= n + 1; j++)
+            {
+                in >> a[i][j];
             }
-            else {
-                l[i][j] = a[i][j];
-                for (int k = 1; k < j; k++)
-                    l[i][j] -= l[i][k] * u[k][j];
+        }
 
-                if (u[j][j] == 0) {
-                    out << "Matrix is singular. Cannot compute LU decomposition.\n";
-                    return 0;
+        vector<vector<double>> u(n + 1, vector<double>(n + 1, 0));
+        vector<vector<double>> l(n + 1, vector<double>(n + 1, 0));
+
+        for (int i = 1; i <= n; i++)
+        {
+            l[i][i] = 1;
+        }
+
+        // ---- LU Decomposition ----
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = 1; j <= n; j++)
+            {
+
+                if (i <= j)
+                {
+                    u[i][j] = a[i][j];
+                    for (int k = 1; k < i; k++)
+                        u[i][j] -= l[i][k] * u[k][j];
                 }
+                else
+                {
+                    l[i][j] = a[i][j];
+                    for (int k = 1; k < j; k++)
+                        l[i][j] -= l[i][k] * u[k][j];
 
-                l[i][j] /= u[j][j];
-            }
-        }
-    }
+                    if (u[j][j] == 0)
+                    {
+                        out << "Matrix is singular. Cannot compute LU decomposition.\n";
+                        return 0;
+                    }
 
-    // Printing U Matrix
-    out << "U Matrix:\n";
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-            out << u[i][j] << " ";
-        }
-        out << "\n";
-    }
-
-    // Printing L Matrix
-    out << "\nL Matrix:\n";
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-            out << l[i][j] << " ";
-        }
-        out << "\n";
-    }
-
-    // Checking Solution Type
-    bool noSolution = false;
-    bool infiniteSolution = false;
-
-    for (int i = 1; i <= n; i++) {
-        bool allZero = true;
-
-        for (int j = 1; j <= n; j++) {
-            if (fabs(u[i][j]) > 1e-9) {
-                allZero = false;
-                break;
+                    l[i][j] /= u[j][j];
+                }
             }
         }
 
-        if (allZero) {
-            double rhs = a[i][n + 1];
-
-            if (fabs(rhs) > 1e-9) {
-                noSolution = true;
+        // ---- Print U Matrix ----
+        out << "U Matrix:\n";
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = 1; j <= n; j++)
+            {
+                out << u[i][j] << " ";
             }
-            else {
-                infiniteSolution = true;
+            out << "\n";
+        }
+
+        // ---- Print L Matrix ----
+        out << "\nL Matrix:\n";
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = 1; j <= n; j++)
+            {
+                out << l[i][j] << " ";
+            }
+            out << "\n";
+        }
+
+        // ---- Forward Substitution: Ly = b ----
+        vector<double> y(n + 1, 0);
+
+        for (int i = 1; i <= n; i++)
+        {
+            y[i] = a[i][n + 1];
+            for (int k = 1; k < i; k++)
+            {
+                y[i] -= l[i][k] * y[k];
             }
         }
-    }
 
-    if (noSolution) {
-        out << "\nThe system has NO SOLUTION (Inconsistent equations).\n";
-        return 0;
-    }
+        // ---- Check Solution Type ----
+        bool noSolution = false;
+        bool infiniteSolution = false;
 
-    if (infiniteSolution) {
-        out << "\nThe system has INFINITE SOLUTIONS (Dependent equations).\n";
-        return 0;
-    }
+        for (int i = 1; i <= n; i++)
+        {
+            bool allZero = true;
 
-    out << "\nThe system has a UNIQUE SOLUTION.\n";
+            for (int j = 1; j <= n; j++)
+            {
+                if (fabs(u[i][j]) > 1e-9)
+                {
+                    allZero = false;
+                    break;
+                }
+            }
 
-    //  Forward Substitution: Ly = b
-    vector<double> y(n + 1, 0);
-
-    for (int i = 1; i <= n; i++) {
-        y[i] = a[i][n + 1];
-        for (int k = 1; k < i; k++) {
-            y[i] -= l[i][k] * y[k];
+            if (allZero)
+            {
+                if (fabs(y[i]) > 1e-9)
+                {
+                    noSolution = true;
+                }
+                else
+                {
+                    infiniteSolution = true;
+                }
+            }
         }
-    }
 
-    //  Backward Substitution: Ux = y 
-    vector<double> ans(n + 1, 0);
-
-    for (int i = n; i >= 1; i--) {
-        ans[i] = y[i];
-        for (int k = i + 1; k <= n; k++) {
-            ans[i] -= u[i][k] * ans[k];
+        if (noSolution)
+        {
+            out << "\nThe system has NO SOLUTION (Inconsistent equations).\n";
+            continue;
         }
-        ans[i] /= u[i][i];
-    }
 
-    // Printing Solution
-    out << "\nFinal Solution (x values):\n";
-    for (int i = 1; i <= n; i++) {
-        out << "x" << i << " = " << ans[i] << "\n";
+        if (infiniteSolution)
+        {
+            out << "\nThe system has INFINITE SOLUTIONS (Dependent equations).\n";
+            continue;
+        }
+
+        out << "\nThe system has a UNIQUE SOLUTION.\n";
+
+        // ---- Backward Substitution: Ux = y ----
+        vector<double> ans(n + 1, 0);
+
+        for (int i = n; i >= 1; i--)
+        {
+            ans[i] = y[i];
+            for (int k = i + 1; k <= n; k++)
+            {
+                ans[i] -= u[i][k] * ans[k];
+            }
+            ans[i] /= u[i][i];
+        }
+
+        // ---- Print Solution ----
+        out << "\nFinal Solution (x values):\n";
+        for (int i = 1; i <= n; i++)
+        {
+            out << "x" << i << " = " << ans[i] << "\n";
+        }
     }
 
     return 0;
 }
 
+
 ```
 
 #### LU Decomposition Input
 ```
+4
+3
+2 1 -1 8
+-3 -1 2 -11
+-2 1 2 -3
+2
+1 1 2
+2 2 4
+2
+1 1 2
+2 2 5
 5
 2 1 -1 3 2 9
 1 3 2 -1 1 8
@@ -821,6 +1072,48 @@ int main() {
 
 #### LU Decomposition Output
 ```
+----- Case 1 -----
+
+U Matrix:
+2 1 -1 
+0 0.5 0.5 
+0 0 -1 
+
+L Matrix:
+1 0 0 
+-1.5 1 0 
+-1 4 1 
+
+The system has a UNIQUE SOLUTION.
+
+Final Solution (x values):
+x1 = 2
+x2 = 3
+x3 = -1
+----- Case 2 -----
+
+U Matrix:
+1 1 
+0 0 
+
+L Matrix:
+1 0 
+2 1 
+
+The system has INFINITE SOLUTIONS (Dependent equations).
+----- Case 3 -----
+
+U Matrix:
+1 1 
+0 0 
+
+L Matrix:
+1 0 
+2 1 
+
+The system has NO SOLUTION (Inconsistent equations).
+----- Case 4 -----
+
 U Matrix:
 2 1 -1 3 2 
 0 2.5 2.5 -2.5 0 
@@ -843,6 +1136,7 @@ x2 = -1
 x3 = 2.26154
 x4 = -0.138462
 x5 = 1.18462
+
 
 ```
 #### [Back to Contents](#table-of-contents)
@@ -956,6 +1250,12 @@ int main()
         return 1;
     }
 
+    int casing;
+    fin>> casing;
+    int r=1;
+    while(casing--){
+    fout<<endl;
+    fout<<"Case "<<r++<<":\n";
     int n;
     fin >> n;
 
@@ -978,22 +1278,45 @@ int main()
 
     double detA = determinant(a, n);
 
-    if (detA == 0) {
-        bool noSol = false, infiniteSol = true;
-
-        for (int r = 1; r <= n; r++) {
+    if (fabs(detA) < 1e-9) {
+        // Row reduce to check rank by gauss jordan elimination
+        vector<vector<double>> tempAug = aug;
+        const double EPS = 1e-9;
+        
+        for (int i = 1; i <= n; i++) {
+            // Find pivot
+            int maxRow = i;
+            for (int k = i + 1; k <= n; k++) {
+                if (fabs(tempAug[k][i]) > fabs(tempAug[maxRow][i]))
+                    maxRow = k;
+            }
+            swap(tempAug[i], tempAug[maxRow]);
+            
+            if (fabs(tempAug[i][i]) < EPS) continue;
+            
+            // Eliminate below
+            for (int k = i + 1; k <= n; k++) {
+                double factor = tempAug[k][i] / tempAug[i][i];
+                for (int j = i; j <= n + 1; j++) {
+                    tempAug[k][j] -= factor * tempAug[i][j];
+                }
+            }
+        }
+        
+        // Check for inconsistency:  row with all zeros in A but non-zero in b
+        bool noSol = false;
+        for (int i = 1; i <= n; i++) {
             bool allZero = true;
-            for (int c = 1; c <= n; c++)
-                if (aug[r][c] != 0)
+            for (int j = 1; j <= n; j++) {
+                if (fabs(tempAug[i][j]) > EPS) {
                     allZero = false;
-
-            if (allZero && aug[r][n+1] != 0) {
+                    break;
+                }
+            }
+            if (allZero && fabs(tempAug[i][n+1]) > EPS) {
                 noSol = true;
-                infiniteSol = false;
                 break;
             }
-            if (!allZero)
-                infiniteSol = false;
         }
 
         if (noSol)
@@ -1001,7 +1324,7 @@ int main()
         else
             fout << "Determinant = 0 → Infinite Solutions (Dependent System)\n";
 
-        return 0;
+        continue;
     }
 
     fout << "Determinant = " << detA << "\n\n";
@@ -1031,9 +1354,12 @@ int main()
     fout << "\nSolution Vector:\n";
     for (int i = 1; i <= n; i++)
         fout << "x" << i << " = " << res[i][1] << "\n";
+    fout << "\n";
+}
 
     fin.close();
     fout.close();
+
 
     return 0;
 }
@@ -1042,6 +1368,17 @@ int main()
 
 #### Matrix Inversion Input
 ```
+4
+3
+2 1 -1 8
+-3 -1 2 -11
+-2 1 2 -3
+2
+1 1 2
+2 2 4
+2
+1 1 2
+2 2 5
 5
 2 1 -1 3 2 9
 1 3 2 -1 1 8
@@ -1052,6 +1389,28 @@ int main()
 
 #### Matrix Inversion Output
 ```
+
+Case 1:
+Determinant = -1
+
+Inverse Matrix:
+4 3 -1 
+-2 -2 1 
+5 4 -1 
+
+Solution Vector:
+x1 = 2
+x2 = 3
+x3 = -1
+
+
+Case 2:
+Determinant = 0 → Infinite Solutions (Dependent System)
+
+Case 3:
+Determinant = 0 → No Solution (Inconsistent System)
+
+Case 4:
 Determinant = 65
 
 Inverse Matrix:
@@ -1067,6 +1426,7 @@ x2 = -1
 x3 = 2.26154
 x4 = -0.138462
 x5 = 1.18462
+
 
 ```
 #### [Back to Contents](#table-of-contents)
