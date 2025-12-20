@@ -1378,27 +1378,31 @@ Iterations = 2
 
 ### Newton's Forward Interpolation Theory
 #### Method used
-**Newton's Forward Difference Interpolation**
+Newton's Forward Difference Interpolation
 
 #### Objective
 To approximate function values at intermediate points using forward differences.
 Supports multiple data points with automatic polynomial order detection.
 
-#### NEWTON FORWARD INTERPOLATION FORMULA:
+#### NEWTON FORWARD INTERPOLATION FORMULA
 
-	f(x) = f(x₀) + uΔf(x₀) + [u(u-1)/2!]Δ²f(x₀) + [u(u-1)(u-2)/3!]Δ³f(x₀) + ...
+f(x) = f(x₀)
+     + uΔf(x₀)
+     + [u(u−1)/2!] Δ²f(x₀)
+     + [u(u−1)(u−2)/3!] Δ³f(x₀)
+     + ...
 
-where:
+where
 
-	u = (x - x₀) / h
-	h = step size (x₁ - x₀)
-	Δⁿf(x₀) = nth forward difference at x₀
+u = (x − x₀) / h  
+h = step size (x₁ − x₀)  
+Δⁿf(x₀) = nth forward difference at x₀  
 
-#### FORWARD DIFFERENCE TABLE:
+#### FORWARD DIFFERENCE TABLE
 
-	Δf(xᵢ) = f(xᵢ₊₁) - f(xᵢ)
-	Δ²f(xᵢ) = Δf(xᵢ₊₁) - Δf(xᵢ)
-	Δⁿf(xᵢ) = Δⁿ⁻¹f(xᵢ₊₁) - Δⁿ⁻¹f(xᵢ)
+Δf(xᵢ)   = f(xᵢ₊₁) − f(xᵢ)  
+Δ²f(xᵢ)  = Δf(xᵢ₊₁) − Δf(xᵢ)  
+Δⁿf(xᵢ)  = Δⁿ⁻¹f(xᵢ₊₁) − Δⁿ⁻¹f(xᵢ)  
 
 #### Data Requirement
 - Tabulated values (x₀, y₀), (x₁, y₁), ..., (xₙ, yₙ)
@@ -1407,7 +1411,7 @@ where:
 #### Features
 - Best suited for interpolation near the beginning of the data table.
 - Requires equally spaced x values.
-- Accuracy improves with more data points and smoother functions.
+
 
 ### Newton's Forward Interpolation Code
 ```cpp
@@ -1608,27 +1612,31 @@ Estimated Forward Interpolation Error = 0.00
 
 ### Newton's Backward Interpolation Theory
 #### Method used
-**Newton's Backward Difference Interpolation**
+Newton's Backward Difference Interpolation
 
 #### Objective
 To approximate function values at intermediate points using backward differences.
 Ideal when interpolating near the end of the data table.
 
-#### NEWTON BACKWARD INTERPOLATION FORMULA:
+#### NEWTON BACKWARD INTERPOLATION FORMULA
 
-	f(x) = f(xₙ) + u∇f(xₙ) + [u(u+1)/2!]∇²f(xₙ) + [u(u+1)(u+2)/3!]∇³f(xₙ) + ...
+f(x) = f(xₙ)
+     + u∇f(xₙ)
+     + [u(u+1)/2!] ∇²f(xₙ)
+     + [u(u+1)(u+2)/3!] ∇³f(xₙ)
+     + ...
 
-where:
+where
 
-	u = (x - xₙ) / h
-	h = step size (x₁ - x₀)
-	∇ⁿf(xₙ) = nth backward difference at xₙ
+u = (x − xₙ) / h  
+h = step size (x₁ − x₀)  
+∇ⁿf(xₙ) = nth backward difference at xₙ  
 
-#### BACKWARD DIFFERENCE TABLE:
+#### BACKWARD DIFFERENCE TABLE
 
-	∇f(xᵢ) = f(xᵢ) - f(xᵢ₋₁)
-	∇²f(xᵢ) = ∇f(xᵢ) - ∇f(xᵢ₋₁)
-	∇ⁿf(xᵢ) = ∇ⁿ⁻¹f(xᵢ) - ∇ⁿ⁻¹f(xᵢ₋₁)
+∇f(xᵢ)   = f(xᵢ) − f(xᵢ₋₁)  
+∇²f(xᵢ)  = ∇f(xᵢ) − ∇f(xᵢ₋₁)  
+∇ⁿf(xᵢ)  = ∇ⁿ⁻¹f(xᵢ) − ∇ⁿ⁻¹f(xᵢ₋₁)  
 
 #### Data Requirement
 - Tabulated values (x₀, y₀), (x₁, y₁), ..., (xₙ, yₙ)
@@ -1638,6 +1646,7 @@ where:
 - Best suited for interpolation near the end of the data table.
 - Requires equally spaced x values.
 - Particularly useful when new data points are appended at the end.
+
 
 ### Newton's Backward Interpolation Code
 ```cpp
@@ -1804,28 +1813,30 @@ Estimated Backward Interpolation Error = 0.00
 
 ### Divided Difference Theory
 #### Method used
-**Newton's Divided Difference Interpolation**
+Newton's Divided Difference Interpolation
 
 #### Objective
 To construct interpolating polynomials for unequally spaced data points.
 Works with both equal and unequal spacing.
 
-#### DIVIDED DIFFERENCES FORMULA:
+#### DIVIDED DIFFERENCES FORMULA
 
-First-order divided difference:
+First-order divided difference
 
-	f[xᵢ, xᵢ₊₁] = [f(xᵢ₊₁) - f(xᵢ)] / (xᵢ₊₁ - xᵢ)
+f[xᵢ, xᵢ₊₁] = [ f(xᵢ₊₁) − f(xᵢ) ] / (xᵢ₊₁ − xᵢ)
 
-Higher-order divided differences (recursive):
+Higher-order divided differences (recursive)
 
-	f[xᵢ, xᵢ₊₁, ..., xᵢ₊ₖ] = [f[xᵢ₊₁, ..., xᵢ₊ₖ] - f[xᵢ, ..., xᵢ₊ₖ₋₁]] / (xᵢ₊ₖ - xᵢ)
+f[xᵢ, xᵢ₊₁, … , xᵢ₊ₖ]
+= [ f[xᵢ₊₁, … , xᵢ₊ₖ] − f[xᵢ, … , xᵢ₊ₖ₋₁] ] / (xᵢ₊ₖ − xᵢ)
 
-#### NEWTON DIVIDED DIFFERENCE POLYNOMIAL:
+#### NEWTON DIVIDED DIFFERENCE POLYNOMIAL
 
-	Pₙ(x) = f[x₀] + (x - x₀)f[x₀,x₁]
-	        + (x - x₀)(x - x₁)f[x₀,x₁,x₂]
-	        + ...
-	        + (x - x₀)...(x - xₙ₋₁)f[x₀,...,xₙ]
+Pₙ(x) = f[x₀]
+       + (x − x₀) f[x₀, x₁]
+       + (x − x₀)(x − x₁) f[x₀, x₁, x₂]
+       + ...
+       + (x − x₀)(x − x₁)...(x − xₙ₋₁) f[x₀, ..., xₙ]
 
 #### Data Requirement
 - Distinct data points (x₀, y₀), (x₁, y₁), ..., (xₙ, yₙ)
